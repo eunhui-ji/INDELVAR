@@ -1,0 +1,15 @@
+# INDELVAR: Python dependencies for the released code (code/: lookup, scoring, builders).
+# Flexible ranges for general use; the code relies only on stable numpy/pandas/pyarrow APIs,
+# so newer versions are expected to work. Authored/tested on Python 3.11.15.
+# R dependencies are pinned in renv.lock.
+#
+# For bit-exact reproduction of the published results, pin the authoring versions:
+#   numpy 2.4.6, pandas 3.0.3, pyarrow 24.0.0
+numpy>=1.24
+pandas>=2.0
+pyarrow>=14.0
+
+# Optional; only for recomputing raw features with compute_features.py (not needed
+# for the lookup / scoring tools):
+#   pyBigWig>=0.3    # conservation features (phyloP100, GERP); without it those columns are NaN
+#   pydssp, biotite  # secondary-structure / structure parsing for the AlphaFold cache build

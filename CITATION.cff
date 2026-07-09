@@ -1,0 +1,38 @@
+cff-version: 1.2.0
+message: "If you use INDELVAR in your research, please cite the paper below."
+title: "INDELVAR: Structure-based interpretation of in-frame indel pathogenicity"
+abstract: >-
+  INDELVAR predicts the pathogenicity of in-frame indels (1-10 amino acids)
+  using a random forest that combines AlphaFold structure with gene- and
+  sequence-level context. It integrates 39 features and maps the
+  score to per-type ACMG/AMP evidence strata.
+type: software
+authors:
+  - family-names: Ji
+    given-names: Eunhui
+    orcid: "https://orcid.org/0000-0001-5508-5994"
+version: "1.0.0"
+date-released: "2026-07-10"
+license: MIT
+repository-code: "https://github.com/eunhui-ji/INDELVAR"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.21285601"
+    description: "Zenodo archive of the precomputed scores and feature tables"
+keywords:
+  - in-frame indel
+  - variant pathogenicity
+  - ACMG/AMP
+  - AlphaFold
+  - random forest
+  - clinical genetics
+preferred-citation:
+  type: article
+  title: "INDELVAR: Structure-based interpretation of in-frame indel pathogenicity"
+  authors:
+    - family-names: Ji
+      given-names: Eunhui
+      orcid: "https://orcid.org/0000-0001-5508-5994"
+  year: 2026
+  journal: "bioRxiv"
+  notes: "preprint; DOI pending bioRxiv submission"

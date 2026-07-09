@@ -1,0 +1,5 @@
+gene	type	n	rho	leakage_free
+TP53	del	323	-0.4421	TRUE
+APP	del	395	-0.5071	FALSE
+APP	ins	763	-0.4684	FALSE
+SLC22A1	del	430	-0.2841	FALSE

@@ -1,0 +1,17 @@
+subset	evidence	points	cutoff	reached
+del	PP3_Supporting	1	0.727666666666667	TRUE
+del	PP3_Moderate	2	0.915666666666667	TRUE
+del	PP3_Moderate3	3	0.957	TRUE
+del	PP3_Strong	4		FALSE
+del	BP4_Supporting	-1	0.326333333333333	TRUE
+del	BP4_Moderate	-2	0.258	TRUE
+del	BP4_Moderate3	-3	0.04	TRUE
+del	BP4_Strong	-4	0.026	TRUE
+ins	PP3_Supporting	1	0.644	TRUE
+ins	PP3_Moderate	2	0.907	TRUE
+ins	PP3_Moderate3	3	0.951	TRUE
+ins	PP3_Strong	4	0.980333333333333	TRUE
+ins	BP4_Supporting	-1	0.176	TRUE
+ins	BP4_Moderate	-2	0.0486666666666667	TRUE
+ins	BP4_Moderate3	-3	0.00266666666666667	TRUE
+ins	BP4_Strong	-4	0.001	TRUE
