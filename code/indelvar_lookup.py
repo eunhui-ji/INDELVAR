@@ -1,6 +1,6 @@
-#!/usr/bin/env python3
-"""INDELVAR lookup: retrieve the precomputed score, evidence tier, and mechanisms
-(optionally the 39 features) for an in-frame indel, by protein coordinate + MANE HGVS p.
+"""INDELVAR lookup: retrieve the precomputed score, evidence tier, and fold-destabilization
+mechanisms (optionally the 39 features) for an in-frame indel, queried by gene (or MANE
+transcript) and its HGVS protein-level description (e.g. p.Leu127del or p.Leu127_Ala128insGly).
 
 Usage: indelvar_lookup.py --gene CFTR --hgvsp p.Leu127dup [--transcript ...] [--features]
 """
@@ -8,11 +8,9 @@ import argparse, json, os, re, sys
 import pandas as pd
 
 AA1 = set("ARNDCQEGHILKMFPSTWYV")
-MECH = ["core_packing", "ss_break", "hbond_loss", "hydrophobic_exposure"]
-
+MECH = ["core_packing_loss", "ss_break", "hbond_loss", "hydrophobic_exposure"]
 
 def _count_residues(seq: str) -> int:
-    """Number of inserted residues in an HGVS ins payload (3-letter, 1-letter, or a count)."""
     seq = seq.strip()
     if seq.isdigit():
         return int(seq)
@@ -23,31 +21,25 @@ def _count_residues(seq: str) -> int:
         return len(seq)
     return len(re.findall(r"[A-Z][a-z]{2}", seq)) or len(seq)
 
-
 def parse_hgvsp(h: str):
-    """Return (kind, key). kind in {deletion, insertion, oos}; key = {aa_start, size}.
-    deletion  aa_start = first deleted residue;  insertion aa_start = residue after which inserted."""
     s = re.sub(r"^[^:]*:", "", h.strip())
     s = re.sub(r"^p\.", "", s).strip("()")
     if "delins" in s or "fs" in s or "ext" in s:
         return "oos", {"why": "delins / frameshift / extension not modelled"}
-    m = re.fullmatch(r"[A-Za-z]{1,3}(\d+)(?:_[A-Za-z]{1,3}(\d+))?del", s)      # Leu194del | Glu336_Arg337del
+    m = re.fullmatch(r"[A-Za-z]{1,3}(\d+)(?:_[A-Za-z]{1,3}(\d+))?del", s)
     if m:
         a = int(m.group(1)); b = int(m.group(2)) if m.group(2) else a
         return "deletion", {"aa_start": a, "size": b - a + 1}
-    m = re.fullmatch(r"[A-Za-z]{1,3}(\d+)(?:_[A-Za-z]{1,3}(\d+))?dup", s)      # Leu127dup | Pro927_Gly929dup
+    m = re.fullmatch(r"[A-Za-z]{1,3}(\d+)(?:_[A-Za-z]{1,3}(\d+))?dup", s)
     if m:
         a = int(m.group(1)); b = int(m.group(2)) if m.group(2) else a
-        return "insertion", {"aa_start": b, "size": b - a + 1}                  # inserted after the 2nd position
-    m = re.fullmatch(r"[A-Za-z]{1,3}(\d+)_[A-Za-z]{1,3}(\d+)ins(.+)", s)      # Ala127_Leu128insGlyGlySer
+        return "insertion", {"aa_start": b, "size": b - a + 1}
+    m = re.fullmatch(r"[A-Za-z]{1,3}(\d+)_[A-Za-z]{1,3}(\d+)ins(.+)", s)
     if m:
         return "insertion", {"aa_start": int(m.group(1)), "size": _count_residues(m.group(3))}
     return "oos", {"why": f"unrecognised / unsupported HGVS p.: {h}"}
 
-
 def _read(tables, stem, col, val):
-    """Read only rows where col==val; prefers parquet, falls back to tsv.gz.
-    Transcript matches are version-insensitive (ENST… with or without .N)."""
     base = val.split(".")[0] if col == "transcript" else None
     pfp = os.path.join(tables, stem + ".parquet")
     if os.path.exists(pfp):
@@ -61,7 +53,6 @@ def _read(tables, stem, col, val):
         df = pd.read_csv(tfp, sep="\t")
         return df[df[col].str.split(".").str[0] == base] if base is not None else df[df[col] == val]
     sys.exit(f"ERROR: {stem}.(parquet|tsv.gz) not found in {tables}")
-
 
 def lookup(gene, transcript, hgvsp, tables, want_features=False):
     kind, key = parse_hgvsp(hgvsp)
@@ -98,9 +89,7 @@ def lookup(gene, transcript, hgvsp, tables, want_features=False):
         res["features"] = _lookup_features(kind, r, tables)
     return res
 
-
 def _lookup_features(kind, row, tables):
-    """Join release_features by the SAME unified natural key."""
     import pyarrow.dataset as ds
     fp = os.path.join(tables, "release_features.parquet")
     if not os.path.exists(fp):
@@ -113,9 +102,8 @@ def _lookup_features(kind, row, tables):
     drop = {"gene", "transcript", "indel_type", "aa_start", "chrom", "pos", "ref", "alt"}
     r0 = m.iloc[0]
     feats = {c: (float(r0[c]) if pd.notna(r0[c]) else None) for c in m.columns if c not in drop}
-    feats["indel_type"] = kind   # categorical model feature; kept so the table feeds score_variants.R
+    feats["indel_type"] = kind
     return feats
-
 
 def main():
     ap = argparse.ArgumentParser(description="INDELVAR protein-coordinate lookup")
@@ -128,7 +116,6 @@ def main():
                     help="directory with the downloaded release_scores / release_features tables")
     a = ap.parse_args()
     print(json.dumps(lookup(a.gene, a.transcript, a.hgvsp, a.tables, a.features), indent=2))
-
 
 if __name__ == "__main__":
     main()

@@ -31,14 +31,14 @@ indelvar_load <- function(model_dir = Sys.getenv("INDELVAR_MODEL",
   e$feats <- readRDS(file.path(model_dir, "col_definitions.rds"))$feature_cols
   e$cut   <- fread(file.path(model_dir, "evidence_cutoffs.tsv"))
   e$grp   <- .INDELVAR_GRP
-  tr <- fread(file.path(Sys.getenv("INDELVAR_ROOT","."), "dataset", "train_data", "train_set.tsv"))
+  tr <- fread(file.path(Sys.getenv("INDELVAR_ROOT","."), "dataset", "train_data", "train_set_features.tsv"))
   mf <- file.path(model_dir, "feature_medians.rds")
   if (file.exists(mf)) e$med <- readRDS(mf) else {
     e$med <- sapply(e$feats, function(f){
       v <- suppressWarnings(as.numeric(tr[[f]])); if (all(is.na(v))) 0 else median(v, na.rm = TRUE) })
     saveRDS(e$med, mf)
   }
-  bg <- .prep_X(tr)                                    # SHAP background = training distribution
+  bg <- .prep_X(tr)
   if (n_background > 0L && n_background < nrow(bg)) {
     set.seed(1L); bg <- bg[sample.int(nrow(bg), n_background), , drop = FALSE]
   }
@@ -54,8 +54,6 @@ indelvar_load <- function(model_dir = Sys.getenv("INDELVAR_MODEL",
        BMo3 = g("BP4_Moderate3"), BSt = g("BP4_Strong"))
 }
 
-# 8-tier assignment, weakest first so the strongest applicable tier wins; NA cutoffs skipped.
-# PP3_Moderate spans +2 and +3 (BP4_Moderate -2/-3); use acmg_points to tell them apart.
 .catv <- function(score, gg) {
   k <- .getco(gg); n <- length(score)
   cat <- rep("Uncertain", n); pts <- rep(0L, n); ok <- !is.na(score)
@@ -89,8 +87,6 @@ indelvar_load <- function(model_dir = Sys.getenv("INDELVAR_MODEL",
 
 .pw <- function(X) predict(.indelvar_env$rf, X, type = "prob")[, "Pathogenic"]
 
-# per-feature permutation Shapley: each sim reveals features in a random order from a random
-# background reference, accumulating prediction deltas; sum of phi = f(x) - f(reference).
 .perm_shap <- function(Xexp, nsim = 150L, seed = 1L) {
   e <- .indelvar_env; Xbg <- e$bg; feats <- e$feats
   set.seed(seed)
@@ -114,11 +110,11 @@ indelvar_explain <- function(df, subset = c("del", "ins"), with_shap = TRUE,
                            nsim = 150L, per_feature = FALSE) {
   subset <- match.arg(subset); e <- .indelvar_env
   if (is.null(e$rf)) stop("call indelvar_load() first")
-  if (subset == "ins") { df <- as.data.table(df); df[, helix_register_preserved := NA_real_] }  # undefined for inserted residues
+  if (subset == "ins") { df <- as.data.table(df); df[, helix_register_preserved := NA_real_] }
   Xexp  <- .prep_X(df)
   score <- round(.pw(Xexp), 6)
   cc <- .catv(score, subset)
-  out <- data.table(indelvar_score = score, indelvar_category = cc$category, acmg_points = cc$points)
+  out <- data.table(indelvar_score = score, acmg_tier = cc$category, acmg_points = cc$points)
   if (with_shap) {
     phi <- .perm_shap(Xexp, nsim = nsim)
     gsum <- function(g) {
@@ -146,7 +142,6 @@ indelvar_explain <- function(df, subset = c("del", "ins"), with_shap = TRUE,
   out[]
 }
 
-# ---- CLI ----
 args <- commandArgs(trailingOnly = TRUE)
 nsim <- 150L; per_feature <- FALSE; keep <- rep(TRUE, length(args))
 i <- which(args == "--nsim")

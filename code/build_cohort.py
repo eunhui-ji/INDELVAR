@@ -1,9 +1,8 @@
-#!/usr/bin/env python
 """Build a MANE Select in-frame-indel cohort with Ensembl VEP.
 
 Usage: build_cohort.py {train|test|vus|benign} [--validate-dup-index]
 """
-import json, os, re, sys, time, urllib.request, urllib.error
+import gzip, json, os, re, sys, time, urllib.request, urllib.error
 import pandas as pd, numpy as np
 
 ROOT = os.environ.get("INDELVAR_ROOT", os.getcwd())
@@ -11,12 +10,14 @@ COH  = os.path.join(ROOT, "data/cohorts")
 CACHE_DIR = os.path.join(ROOT, "data/processed/mane_vep_cache")
 os.makedirs(CACHE_DIR, exist_ok=True)
 VEP_URL = "https://rest.ensembl.org/vep/human/region"
+RAW = os.path.join(ROOT, "data/raw")
+CLINVAR_VCF     = os.path.join(RAW, "clinvar.vcf.gz")
+VARIANT_SUMMARY = os.path.join(RAW, "variant_summary.txt.gz")
 
-SRC = {  # cohort -> (input postable, output postable, has_label)
-    "train": ("postable_train.tsv",   "postable_train_mane.tsv", True),
+SRC = {
+    "train": ("postable_train.tsv",   "train_set_coords.tsv", True),
     "test":  ("postable_test.tsv",   "postable_test_mane.tsv",  True),
     "vus":   ("postable_vus.tsv",    "postable_vus_mane.tsv",   False),
-    # gnomAD benign background
     "benign": ("postable_gnomad_benign.tsv", "postable_gnomad_benign_mane.tsv", False),
 }
 
@@ -32,7 +33,6 @@ def vep_batch(batch):
     return json.load(urllib.request.urlopen(req, timeout=300))
 
 def vep_all(vids, cache_path):
-    """VEP every vid, caching raw records by input-string. Resumable / offline once cached."""
     cache = {}
     if os.path.exists(cache_path):
         cache = {r["input"]: r for r in json.load(open(cache_path))}
@@ -63,7 +63,6 @@ def mane_tc(rec):
             return tc
     return None
 
-# --- HGVSp parsers ---------------------------------------------------------- #
 _DUP_RANGE  = re.compile(r"[A-Za-z]{3}(\d+)_[A-Za-z]{3}(\d+)dup")
 _DUP_SINGLE = re.compile(r"[A-Za-z]{3}(\d+)dup")
 _INS_RANGE  = re.compile(r"[A-Za-z]{3}(\d+)_[A-Za-z]{3}(\d+)ins")
@@ -78,7 +77,6 @@ def _clean_hgvsp(hgvsp):
     return p.strip("()")
 
 def parse_del_window(hgvsp):
-    """Deleted-residue window [start,end] from the MANE HGVSp."""
     p = _clean_hgvsp(hgvsp)
     if p is None:
         return (None, None)
@@ -91,21 +89,56 @@ def parse_del_window(hgvsp):
     return (None, None)
 
 def junction_L(hgvsp):
-    """Junction L (residue 5' of the insertion point, 3'-canonical). Returns (L, kind)."""
     p = _clean_hgvsp(hgvsp)
     if p is None:
         return (None, None)
     m = _DUP_RANGE.search(p)
     if m:
-        return (int(m.group(2)), "dup")     # 3'-most duplicated residue
+        return (int(m.group(2)), "dup")
     m = _INS_RANGE.search(p)
     if m:
-        return (int(m.group(1)), "ins")     # left flank of the insertion point
+        return (int(m.group(1)), "ins")
     m = _DUP_SINGLE.search(p)
     if m:
         return (int(m.group(1)), "dup")
     return (None, None)
 
+def ge1star_keepset(variant_ids):
+    for p in (CLINVAR_VCF, VARIANT_SUMMARY):
+        if not os.path.exists(p):
+            sys.exit(f"missing {p}: the train >=1-star gate needs the ClinVar VCF and "
+                     "variant_summary.txt.gz (data/raw/), supplied by the user.")
+    want = set(variant_ids)
+    vid2ai = {}
+    with gzip.open(CLINVAR_VCF, "rt") as f:
+        for line in f:
+            if line[0] == "#":
+                continue
+            p = line.split("\t")
+            vid = f"{p[0]}_{p[1]}_{p[3]}_{p[4]}"
+            if vid in want:
+                for kv in p[7].split(";"):
+                    if kv.startswith("ALLELEID="):
+                        vid2ai[vid] = kv[9:]; break
+    vs = pd.read_csv(VARIANT_SUMMARY, sep="\t", low_memory=False,
+                     usecols=["#AlleleID", "Assembly", "ReviewStatus", "NumberSubmitters"])
+    vs = vs[vs.Assembly == "GRCh38"].copy()
+    vs["#AlleleID"] = vs["#AlleleID"].astype(str)
+    vs = vs.sort_values("NumberSubmitters", ascending=False).drop_duplicates("#AlleleID")
+    ai2rs = dict(zip(vs["#AlleleID"], vs.ReviewStatus))
+
+    def is_ge1star(rs):
+        if rs is None or isinstance(rs, float):
+            return False
+        s = rs.lower()
+        if "practice guideline" in s or "expert panel" in s:
+            return True
+        if "conflicting" in s:
+            return False
+        if "multiple submitters" in s and "no conflict" in s:
+            return True
+        return "single submitter" in s
+    return {v for v in want if is_ge1star(ai2rs.get(vid2ai.get(v)))}
 
 def main(cohort, validate_dup_index=False):
     inp, outp, has_label = SRC[cohort]
@@ -115,7 +148,6 @@ def main(cohort, validate_dup_index=False):
                  "postables from the development repo (data/cohorts/), which are not shipped "
                  "in the release; see README 'Reproduce'.")
     base = pd.read_csv(inp_path, sep="\t")
-    # ref/alt from variant_id (test/vus postables omit them)
     sp = base.variant_id.str.split("_", expand=True)
     base["chrom"] = sp[0]; base["pos"] = sp[1].astype(int)
     base["ref"] = sp[2];   base["alt"] = sp[3]
@@ -124,7 +156,6 @@ def main(cohort, validate_dup_index=False):
 
     cache = vep_all(vids, os.path.join(CACHE_DIR, f"{cohort}.json"))
 
-    # gene/uniprot/protein_length from the MANE transcript + _gene_lookup
     glp = os.path.join(ROOT, "data/precomputed/_gene_lookup.csv")
     gene_lookup = {}
     if os.path.exists(glp):
@@ -136,7 +167,7 @@ def main(cohort, validate_dup_index=False):
 
     rows, kept, dropped_csq, no_mane, no_pos = [], 0, {}, 0, 0
     ins_kind = {"dup": 0, "ins": 0}
-    L_clipped = 0                       # window clips at a terminus (L<=1 or L+2>plen)
+    L_clipped = 0
     gene_reassigned = uniprot_reassigned = 0
     old_ps = base.set_index("variant_id").get("protein_pos_start")
     match_ps = 0; comparable = 0
@@ -150,7 +181,6 @@ def main(cohort, validate_dup_index=False):
             key = ";".join(sorted(ct)); dropped_csq[key] = dropped_csq.get(key, 0) + 1
             continue
         itype = "deletion" if "inframe_deletion" in ct else "insertion"
-        # gene/uniprot/protein_length from the MANE transcript
         gene_symbol = tc.get("gene_symbol") or getattr(r, "gene_symbol")
         gl_hit = gene_lookup.get(gene_symbol)
         if gl_hit is not None:
@@ -168,7 +198,7 @@ def main(cohort, validate_dup_index=False):
             if L is None:
                 no_pos += 1; continue
             ins_kind[kind] += 1
-            ps, pe = L - 1, L + 2         # flanking window [L-1 .. L+2]
+            ps, pe = L - 1, L + 2
             if L <= 1 or (pd.notna(plen) and pe > plen):
                 L_clipped += 1
         if ps is None:
@@ -183,13 +213,16 @@ def main(cohort, validate_dup_index=False):
         if has_label:
             row["label"] = getattr(r, "label")
         rows.append(row); kept += 1
-        # position sanity vs old (deletions only; insertions intentionally change)
         if itype == "deletion" and old_ps is not None:
             o = old_ps.get(r.variant_id)
             if pd.notna(o):
                 comparable += 1; match_ps += int(int(o) == ps)
 
     out = pd.DataFrame(rows)
+    if cohort == "train":
+        keep = ge1star_keepset(out.variant_id)
+        n0 = len(out); out = out[out.variant_id.isin(keep)].reset_index(drop=True)
+        log(f"  >=1-star gate: {len(out)}/{n0} kept")
     out.to_csv(os.path.join(COH, outp), sep="\t", index=False)
     log(f"\n[{cohort}] KEPT {kept} / {len(vids)}  -> {outp}")
     log(f"  no MANE tx:        {no_mane}")
@@ -205,20 +238,17 @@ def main(cohort, validate_dup_index=False):
     if has_label:
         log(f"  label split: {out.label.value_counts().to_dict()}")
 
-    # L-range validity: junction L = ps+1 must be within [1, protein_length]
     ins = out[out.indel_type == "insertion"].copy()
     if len(ins):
         ins["L"] = ins.protein_pos_start.astype(int) + 1
         bad = ins[(ins.L < 1) | (pd.notna(ins.protein_length) & (ins.L > ins.protein_length))]
         log(f"  insertion L in [1,plen]: {len(ins)-len(bad)}/{len(ins)} valid"
-            + (f"  (⚠ {len(bad)} out of range)" if len(bad) else ""))
+            + (f"  ({len(bad)} out of range)" if len(bad) else ""))
 
     if validate_dup_index:
         _validate_dup_index(out)
 
-
 def _validate_dup_index(out):
-    """Cross-check HGVSp-derived L against the genomic-left-aligned dup index."""
     idx_fp = os.path.join(ROOT, "data/precomputed/precomputed_insertions_genomic.parquet")
     if not os.path.exists(idx_fp):
         log("  [validate] dup index not found: skipping"); return
@@ -240,7 +270,6 @@ def _validate_dup_index(out):
         log(f"  [validate] dup-index matched {len(m)}/{len(ins)}; "
             f"L==maxpe {100*(off==0).mean():.1f}%; offset>=0 {100*(off>=0).mean():.1f}% "
             f"(3'-shift vs left-align, expected)")
-
 
 if __name__ == "__main__":
     args = [a for a in sys.argv[1:] if not a.startswith("--")]

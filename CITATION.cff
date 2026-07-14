@@ -17,7 +17,7 @@ license: MIT
 repository-code: "https://github.com/eunhui-ji/INDELVAR"
 identifiers:
   - type: doi
-    value: "10.5281/zenodo.21285601"
+    value: "10.5281/zenodo.21285600"
     description: "Zenodo archive of the precomputed scores and feature tables"
 keywords:
   - in-frame indel

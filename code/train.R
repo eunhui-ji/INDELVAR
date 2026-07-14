@@ -1,11 +1,8 @@
 #!/usr/bin/env Rscript
-## Train the INDELVAR random forest (caret, ntree=1000, repeatedcv 5x3) on the
-## ClinVar in-frame-indel training set. Score = raw RF Pathogenic probability.
-## Usage: Rscript train.R
+## Train the INDELVAR random forest on the ClinVar in-frame-indel training set.
 suppressPackageStartupMessages({
   library(data.table); library(caret); library(randomForest); library(pROC)
 })
-## package versions pinned in renv.lock; RNG pinned to the R>=3.6 default below
 RNGkind(kind = "Mersenne-Twister", normal.kind = "Inversion", sample.kind = "Rejection")
 SEED <- 42; set.seed(SEED)
 SRC  <- Sys.getenv("INDELVAR_ROOT", ".")
@@ -13,7 +10,7 @@ OUT  <- Sys.getenv("INDELVAR_MODEL_OUT", file.path(SRC, "model"))
 dir.create(OUT, showWarnings = FALSE)
 say  <- function(...) cat(format(Sys.time(), "%H:%M:%S "), sprintf(...), "\n", sep = "")
 
-full  <- fread(file.path(SRC, "dataset", "train_data", "train_set.tsv"))
+full  <- fread(file.path(SRC, "dataset", "train_data", "train_set_features.tsv"))
 feats <- readRDS(file.path(OUT, "col_definitions.rds"))$feature_cols
 say("training set = %d (P=%d B=%d; del=%d ins=%d); features = %d", nrow(full),
     sum(full$label == "Pathogenic"), sum(full$label == "Benign"),
@@ -23,7 +20,7 @@ df <- as.data.frame(full)
 df$label <- factor(as.character(df$label), levels = c("Benign", "Pathogenic"))
 if ("indel_type" %in% feats)
   df$indel_type <- factor(as.character(df$indel_type), levels = c("deletion", "insertion"))
-saveRDS(df, file.path(OUT, "training_set.rds"))  # figure-data input (fig02/03/05/S1)
+saveRDS(df, file.path(OUT, "train_set.rds"))
 
 ctrl <- trainControl(method = "repeatedcv", number = 5, repeats = 3, classProbs = TRUE,
                      summaryFunction = twoClassSummary, savePredictions = "final")
@@ -39,7 +36,6 @@ say("RF trained in %.1f min; bestTune mtry = %d", as.numeric(Sys.time() - t0, un
     rf_fit$bestTune$mtry)
 saveRDS(rf_fit, file.path(OUT, "indelvar.rds"))
 
-## Out-of-fold predictions at bestTune, averaged across repeats (RAW probability).
 oof     <- as.data.table(rf_fit$pred)[mtry == rf_fit$bestTune$mtry]
 oof_avg <- oof[, .(indelvar = mean(Pathogenic), label_oof = first(obs)), by = rowIndex]
 oof_avg[, variant_id := df$variant_id[rowIndex]]
@@ -50,7 +46,6 @@ say("OOF: N = %d (P = %d B = %d); AUROC(raw) = %.4f", nrow(oof_avg),
     as.numeric(pROC::auc(pROC::roc(oof_avg$y, oof_avg$indelvar, quiet = TRUE,
                                    levels = c(0, 1), direction = "<"))))
 
-## Feature medians for prediction-time imputation (used by build_db/eval scoring).
 med <- sapply(feats, function(f) {
   v <- suppressWarnings(as.numeric(full[[f]])); if (all(is.na(v))) 0 else median(v, na.rm = TRUE) })
 saveRDS(med, file.path(OUT, "feature_medians.rds"))

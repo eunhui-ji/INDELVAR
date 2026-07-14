@@ -1,6 +1,6 @@
 # INDELVAR (IN-frame inDEL VARiant pathogenicity predictor)
 
-INDELVAR predicts the pathogenicity of in-frame indels (1-10 amino acids) with a random forest over 39 features, including AlphaFold-derived three-dimensional structural features. It returns a 0-1 pathogenic probability that maps to per-type ACMG/AMP evidence strata: for insertions, from strong evidence for pathogenicity (+4, provisional) down to strong evidence for benignity (-4); for deletions, from moderate evidence for pathogenicity (+3) down to strong evidence for benignity (-4). Each prediction also decomposes into four interpretable fold-destabilization mechanisms (core packing loss, secondary-structure break, hydrogen-bond loss, and hydrophobic core exposure), so every score carries a structural rationale.
+INDELVAR predicts the pathogenicity of in-frame indels (1-10 amino acids) with a random forest over 39 features, including AlphaFold-derived three-dimensional structural features. It returns a 0-1 pathogenic probability, calibrated separately for insertions and deletions to ACMG/AMP evidence strata under the ClinGen SVI framework. Each prediction also decomposes into four interpretable fold-destabilization mechanisms (core packing loss, secondary-structure break, hydrogen-bond loss, and hydrophobic core exposure).
 
 ![INDELVAR overview](assets/overview.png)
 
@@ -33,13 +33,11 @@ Rscript code/score_variants.R <features.tsv> <out.tsv> [del|ins]
 
 ## Performance
 
-On an independent test set, INDELVAR reaches an AUROC of 0.927 (deletions 0.924, insertions 0.932). Its scores are calibrated to ACMG/AMP evidence strata under the ClinGen SVI local posterior probability framework, separately per indel type: insertions reach a provisional PP3_Strong (+4) and BP4_Strong (-4), and deletions reach PP3_Moderate (+3) and BP4_Strong (-4). Across ClinVar in-frame-indel VUS, INDELVAR assigns a PP3 or BP4 stratum to 79.9%.
-
-![INDELVAR per-type ACMG/AMP evidence-strength calibration, deletions and insertions](assets/performance.png)
+On an independent test set, INDELVAR reaches an AUROC of 0.925 (deletions 0.922, insertions 0.932). Its scores are calibrated separately per indel type to ACMG/AMP evidence strata under the ClinGen SVI local posterior-probability framework.
 
 ## Download
 
-The precomputed scores and the 39-feature matrix for all ~209 million 1-10 aa in-frame indels across 19,053 MANE Select protein-coding genes are on Zenodo (large files): **[DOI: 10.5281/zenodo.21285601](https://doi.org/10.5281/zenodo.21285601)**.
+The precomputed scores and the 39-feature matrix for all ~209 million 1-10 aa in-frame indels across 19,053 MANE Select protein-coding genes are on Zenodo (large files): **[DOI: 10.5281/zenodo.21285600](https://doi.org/10.5281/zenodo.21285600)**.
 
 | file | rows | description |
 |---|---|---|
@@ -50,7 +48,7 @@ Place the downloaded tables in `data/` (or pass `--tables <dir>` to the lookup t
 
 ## Reproduce
 
-[`code/WORKFLOW.md`](code/WORKFLOW.md) documents the full pipeline: building the model and database, calibrating the cutoffs, and regenerating every figure and table.
+[`code/WORKFLOW.md`](code/WORKFLOW.md) documents the full pipeline: building the cohorts and features, training the model, calibrating the cutoffs, and assembling the precomputed database.
 
 ## Citation
 
@@ -60,4 +58,4 @@ Ji E. "INDELVAR: Structure-based interpretation of in-frame indel pathogenicity.
 
 Calibration uses the ClinGen SVI local likelihood-ratio framework ([Pejaver et al. 2022](https://doi.org/10.1016/j.ajhg.2022.10.013)) with per-type evidence targets from [Abderrazzaq et al. 2026](https://doi.org/10.64898/2026.04.15.718599).
 
-The precomputed scores and feature tables are archived at [doi:10.5281/zenodo.21285601](https://doi.org/10.5281/zenodo.21285601).
+The precomputed scores and feature tables are archived at [doi:10.5281/zenodo.21285600](https://doi.org/10.5281/zenodo.21285600).

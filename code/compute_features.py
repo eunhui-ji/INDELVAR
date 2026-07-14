@@ -1,9 +1,7 @@
-#!/usr/bin/env python3
-"""Compute the 39 INDELVAR features from cached per-protein/per-gene inputs (under
-$INDELVAR_ROOT/data); shared by training, the database build, and release scoring.
+"""Compute the 39 INDELVAR features from cached per-protein/per-gene inputs.
 
 Usage: compute_features.py <variants.{tsv,parquet}> <out.tsv> [--cache DIR] [--no-conservation]
-       compute_features.py --selftest [RAW_COHORT.tsv] [--n N]   # RAW cohort, not train_set.tsv
+       compute_features.py --selftest [RAW_COHORT.tsv] [--n N]   # RAW cohort, not train_set_features.tsv
 """
 from __future__ import annotations
 
@@ -18,7 +16,6 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-# Constants
 CONTACT_CUTOFF = 8.0
 HELIX_TURN = 3.6
 HYDROPHOBIC = set("AVILMFWP")
@@ -59,15 +56,11 @@ FEATURE_COLS = [
     "phylop100_mean", "gerp_mean",
 ] + SUBCELL_COLS + ["local_entropy", "dist_to_splice"]
 
-
 def log(m):
     print(f"[{time.strftime('%H:%M:%S')}] {m}", flush=True)
 
-
-# Per-variant structural feature math
 def get_indices(resnos, ps, pe):
     return np.where((resnos >= ps) & (resnos <= pe))[0]
-
 
 def compute_wcn(ca, idxs):
     if len(idxs) == 0:
@@ -84,7 +77,6 @@ def compute_wcn(ca, idxs):
         vals.append(np.sum(1.0 / d2[valid]))
     return float(np.mean(vals)) if vals else np.nan
 
-
 def compute_contact_density(ca, idxs):
     if len(idxs) == 0:
         return np.nan
@@ -96,7 +88,6 @@ def compute_contact_density(ca, idxs):
         d[i] = np.inf
         cnts.append(int(np.sum(d < CONTACT_CUTOFF)))
     return float(np.mean(cnts)) if cnts else np.nan
-
 
 def compute_bridging_contacts(ca, idxs, N):
     if len(idxs) == 0:
@@ -114,7 +105,6 @@ def compute_bridging_contacts(ca, idxs, N):
             cnt += 1
     return float(cnt)
 
-
 def find_ss_element_span(sse, idx):
     if idx < 0 or idx >= len(sse):
         return None
@@ -128,7 +118,6 @@ def find_ss_element_span(sse, idx):
     while b < len(sse) - 1 and sse[b + 1] == s:
         b += 1
     return (a, b)
-
 
 def compute_ss_disruption(sse, idxs):
     if len(idxs) == 0:
@@ -144,9 +133,7 @@ def compute_ss_disruption(sse, idxs):
     frac = float(intersect) / float(elt_len) if elt_len > 0 else np.nan
     return (is_break, frac)
 
-
 def compute_helix_register(sse, idxs, indel_type, aa_change):
-    """|cos(2π·k/3.6)| for helix-internal deletions; NaN for insertions and non-helix windows."""
     if indel_type != "deletion" or len(idxs) == 0:
         return np.nan
     center = idxs[len(idxs) // 2]
@@ -154,13 +141,11 @@ def compute_helix_register(sse, idxs, indel_type, aa_change):
         return np.nan
     return float(abs(math.cos(2 * math.pi * aa_change / HELIX_TURN)))
 
-
 def compute_hbond_density(hbond_map, idxs):
     if len(idxs) == 0 or hbond_map.size == 0:
         return np.nan
     sums = hbond_map[idxs].sum(axis=1) + hbond_map[:, idxs].sum(axis=0)
     return float(np.mean(sums))
-
 
 def compute_hydrophobic_exposure_risk(resnames, rsa, idxs):
     if len(idxs) == 0:
@@ -173,7 +158,6 @@ def compute_hydrophobic_exposure_risk(resnames, rsa, idxs):
         if (aa1 in HYDROPHOBIC) and (rsa[i] < RSA_BURIED_THR):
             n_risk += 1
     return float(n_risk) / float(len(idxs))
-
 
 def compute_local_ss_class(sse, idxs):
     if len(idxs) == 0:
@@ -188,7 +172,6 @@ def compute_local_ss_class(sse, idxs):
         return 1.0
     return 0.0
 
-
 def _wmean(arr, idxs):
     if len(idxs) == 0:
         return np.nan
@@ -196,10 +179,7 @@ def _wmean(arr, idxs):
     v = v[~np.isnan(v)]
     return float(v.mean()) if v.size else np.nan
 
-
-# Cached reference data
 class Refs:
-    """Lazy per-protein/per-gene cache holder."""
 
     def __init__(self, cache_dir, with_conservation=True):
         c = Path(cache_dir)
@@ -208,14 +188,14 @@ class Refs:
         self.seq_dir = c / "processed" / "uniprot_seq"
         self.af_dir = c / "raw" / "alphafold_v6_bulk"
         self.gene_lookup = self._load_gene_lookup(c / "precomputed" / "_gene_lookup.csv")
-        self.gene_sites = None          # built on first dist_to_splice use
+        self.gene_sites = None
         self.mane_gff = c / "raw" / "mane_gff" / "MANE.GRCh38.v1.5.ensembl_genomic.gff.gz"
         self._prot, self._json, self._seq = {}, {}, {}
         self.with_conservation = with_conservation
         self._bw = None
-        self.mane_summary = c / "raw" / "MANE_summary.txt.gz"   # gene -> MANE transcript
-        self._txm = None            # {transcript: cds model} (lazy)
-        self._g2tx = None           # gene_symbol -> MANE Ensembl transcript id
+        self.mane_summary = c / "raw" / "MANE_summary.txt.gz"
+        self._txm = None
+        self._g2tx = None
 
     @staticmethod
     def _load_gene_lookup(p):
@@ -242,7 +222,6 @@ class Refs:
         return prot
 
     def _plddt(self, uniprot, n, npz_plddt):
-        """pLDDT from the tier3 parse cache, else the npz array, else NaN."""
         pkl = self.npz_dir.parent / "tier3_protein_cache" / f"{uniprot}.pkl"
         if pkl.exists():
             try:
@@ -331,9 +310,6 @@ class Refs:
         return sites
 
     def txmodel(self, transcript=None, gene=None):
-        """CDS genomic-position model for a MANE transcript (insertion conservation).
-        Resolves by transcript id or gene; None if unresolved (caller falls back to the
-        genomic-span query)."""
         if self._txm is None:
             self._txm, self._g2tx = self._build_txmodels()
         cands = []
@@ -347,8 +323,6 @@ class Refs:
         return None
 
     def _build_txmodels(self):
-        """{transcript: {strand, chrom, cds_pos}} + {gene: MANE transcript}, parsed from
-        the MANE genomic GFF CDS features."""
         tx_cds, tx_strand, tx_chrom = {}, {}, {}
         if Path(self.mane_gff).exists():
             with gzip.open(self.mane_gff, "rt") as fh:
@@ -384,8 +358,6 @@ class Refs:
         return models, g2tx
 
     def bigwigs(self):
-        """phyloP100 (UCSC) + GERP (Ensembl) bigWig handles; remote by default,
-        local copies via env vars. (None, None) if unavailable -> NaN."""
         if not self.with_conservation:
             return None
         if self._bw is None:
@@ -402,8 +374,6 @@ class Refs:
                 self._bw = (None, None)
         return self._bw
 
-
-# Feature-group assemblers
 def _structural(prot, ps, pe, indel_type, size):
     if prot is None:
         return {k: np.nan for k in (
@@ -419,7 +389,6 @@ def _structural(prot, ps, pe, indel_type, size):
     plddt_mean = _wmean(prot["plddt"], idxs)
     helix_isH = np.asarray([1.0 if s == SSE_HELIX else 0.0 for s in sse])
     sheet_isE = np.asarray([1.0 if s == SSE_SHEET else 0.0 for s in sse])
-    # ss_element_frac_affected/local_ss_class: del + ins; helix_register_preserved: del only.
     return dict(
         af_plddt_mean=plddt_mean,
         af_helix_frac=_wmean(helix_isH, idxs),
@@ -437,9 +406,7 @@ def _structural(prot, ps, pe, indel_type, size):
         low_plddt_region=int(plddt_mean < 50) if not np.isnan(plddt_mean) else 0,
     )
 
-
 def _annotation(obj, ps, pe):
-    """Tier-4 binaries aggregated over the indel window [ps, pe] (1-based)."""
     out = dict(in_domain=0, n_domains=0, in_repeat=0, ptm_nearby=0,
                ptm_count_near=0, disulfide_nearby=0, in_active_site=0)
     if obj is None:
@@ -452,8 +419,8 @@ def _annotation(obj, ps, pe):
             s = int(loc["start"]["value"]); e = int(loc["end"]["value"])
         except (KeyError, TypeError, ValueError):
             continue
-        overlap = (s <= pe and e >= ps)                             # domain/active-site overlap
-        near = (ps - W <= s <= pe + W) or (ps - W <= e <= pe + W)   # PTM/disulfide within +/-W
+        overlap = (s <= pe and e >= ps)
+        near = (ps - W <= s <= pe + W) or (ps - W <= e <= pe + W)
         if t in DOMAIN_TYPES:
             if overlap:
                 out["in_domain"] = 1
@@ -473,9 +440,7 @@ def _annotation(obj, ps, pe):
                 out["in_active_site"] = 1
     return out
 
-
 def _classify_subcell(text):
-    """Single-label, priority-ordered classification from the first reported location string."""
     if not text:
         return "Unknown"
     t = str(text).lower()
@@ -491,7 +456,6 @@ def _classify_subcell(text):
     if "extracell" in t:                   return "Secreted"
     return "Other"
 
-
 def _subcell(obj):
     res = {c: 0 for c in SUBCELL_COLS}
     val = None
@@ -499,12 +463,11 @@ def _subcell(obj):
         for c in obj.get("comments", []):
             if c.get("commentType") == "SUBCELLULAR LOCATION":
                 sl = c.get("subcellularLocations", [])
-                if sl:                                  # first location of the first comment
+                if sl:
                     val = sl[0].get("location", {}).get("value")
                     break
     res[f"subcell_{_classify_subcell(val)}"] = 1
     return res
-
 
 def _entropy(seq, ps, pe):
     if seq is None:
@@ -523,7 +486,6 @@ def _entropy(seq, ps, pe):
     p = cnt[cnt > 0] / n
     return float(round(-(p * np.log2(p)).sum(), 4))
 
-
 def _dist_to_splice(refs, gene, chrom, pos):
     rec = refs.splice_sites(gene)
     if rec is None or pos is None or (isinstance(pos, float) and np.isnan(pos)):
@@ -535,10 +497,7 @@ def _dist_to_splice(refs, gene, chrom, pos):
     il = max(i - 1, 0)
     return float(min(abs(sites[i] - pos), abs(sites[il] - pos)))
 
-
 def _conservation(refs, chrom, pos, ref, alt):
-    """phyloP100 / GERP mean over the variant's reference nucleotides.
-    phyloP uses UCSC 'chrN', GERP uses Ensembl 'N'."""
     bw = refs.bigwigs()
     if bw is None or bw[0] is None:
         return (np.nan, np.nan)
@@ -563,11 +522,7 @@ def _conservation(refs, chrom, pos, ref, alt):
     return (m(ph, chrom if str(chrom).startswith("chr") else "chr" + str(chrom)),
             m(ge, str(chrom).replace("chr", "")))
 
-
 def _cds_span(model, s, e):
-    """Genomic positions (transcript 5'->3') of the CDS nucleotides for residues [s..e].
-    Returns (gpos, gmin, gmax, status); status 'ok' only if the span is a single contiguous
-    genomic interval (no intron crossing)."""
     cds = model["cds_pos"]; n = len(cds)
     c1 = (s - 1) * 3 + 1; c2 = e * 3
     if c1 < 1 or c2 > n:
@@ -577,11 +532,7 @@ def _cds_span(model, s, e):
         return None, None, None, "cross_intron"
     return gpos, gmin, gmax, "ok"
 
-
 def _conservation_ins_v1(refs, transcript, gene, ps, pe):
-    """INSERTION conservation: mean phyloP100 / GERP over the reference codons of the
-    junction window [ps..pe]. Same value for either genomic representation. Returns None
-    (caller falls back to _conservation) when the CDS model is unavailable."""
     bw = refs.bigwigs()
     if bw is None or bw[0] is None:
         return (np.nan, np.nan)
@@ -608,16 +559,10 @@ def _conservation_ins_v1(refs, transcript, gene, ps, pe):
     return (float(sum(P) / len(P)) if P else np.nan,
             float(sum(G) / len(G)) if G else np.nan)
 
-
-# Public API
 _POS_DEP_ANNOT = ("in_domain", "n_domains", "in_repeat", "ptm_nearby",
                   "ptm_count_near", "disulfide_nearby", "in_active_site")
 
-
 def compute_features(variant: dict, refs: Refs) -> dict:
-    """Return the 39 model features for one in-frame indel from cached inputs.
-    Position-dependent features (structural, annotation, local_entropy,
-    indel_size_relative) are NaN when the protein position is unmapped."""
     gene = variant["gene_symbol"]
     up = variant["uniprot"]
     itype = "deletion" if str(variant["indel_type"]).startswith(("del", "deletion")) or \
@@ -634,14 +579,11 @@ def compute_features(variant: dict, refs: Refs) -> dict:
     obj = refs.uniprot_json(up)
     feats = {}
 
-    # tier 2: gene constraint (position-independent)
     g = refs.gene_lookup.get(gene, (np.nan, np.nan, np.nan, np.nan))
     feats.update(pli=g[0], loeuf=g[1], mis_z=g[2], cds_length=g[3])
 
-    # tier 4 subcellular (position-independent)
     feats.update(_subcell(obj))
 
-    # conservation: del = genomic span; ins = junction-window codons (genomic-span fallback)
     if refs.with_conservation and variant.get("pos") is not None:
         cons = None
         if itype == "insertion" and pos_ok:
@@ -654,44 +596,33 @@ def compute_features(variant: dict, refs: Refs) -> dict:
         ph, ge = (np.nan, np.nan)
     feats.update(phylop100_mean=ph, gerp_mean=ge)
 
-    # dist_to_splice (genomic)
     feats.update(dist_to_splice=_dist_to_splice(refs, gene, variant.get("chrom"),
                                                 variant.get("pos")))
 
     if pos_ok:
         prot = refs.protein(up)
-        # tier 3: structural
         feats.update(_structural(prot, ps, pe, itype, size))
-        # tier 4: UniProt annotation
         feats.update(_annotation(obj, ps, pe))
-        # sequence context
         feats.update(local_entropy=_entropy(refs.sequence(up), ps, pe))
-        # indel size relative to protein length
         plen = variant.get("protein_length")
         if plen is None or (isinstance(plen, float) and np.isnan(plen)):
             plen = len(prot["resnos"]) if prot is not None else np.nan
         feats.update(indel_size_relative=(size / plen)
                      if (plen and not (isinstance(plen, float) and np.isnan(plen))) else np.nan)
     else:
-        # unmapped position -> position-dependent features are NaN (median-imputed later)
-        feats.update(_structural(None, ps, pe, itype, size))   # all-NaN structural dict
+        feats.update(_structural(None, ps, pe, itype, size))
         feats.update({k: np.nan for k in _POS_DEP_ANNOT})
         feats.update(local_entropy=np.nan, indel_size_relative=np.nan)
 
-    # indel-intrinsic (always available)
     feats.update(indel_size_aa=size, indel_type=itype)
     return {k: feats.get(k) for k in FEATURE_COLS}
-
 
 def compute_table(df: pd.DataFrame, refs: Refs) -> pd.DataFrame:
     rows = [compute_features(r._asdict(), refs) for r in df.itertuples(index=False)]
     return pd.DataFrame(rows, columns=FEATURE_COLS)
 
-
-# CLI
 def _read_any(p):
     return pd.read_parquet(p) if str(p).endswith(".parquet") else pd.read_csv(p, sep="\t")
-
 
 def main(argv):
     if "--selftest" in argv:
@@ -716,17 +647,12 @@ def main(argv):
     out.to_csv(outfile, sep="\t", index=False)
     log(f"wrote {outfile} ({len(out):,} rows, {out.shape[1]} cols)")
 
-
 def _selftest(argv):
-    """Recompute features for a sample of a RAW cohort and compare to stored values.
-    Needs the raw input columns and per-protein caches; pass the raw cohort from
-    build_cohort.py (not the computed train_set.tsv)."""
     root = Path(os.environ.get("INDELVAR_ROOT", "."))
-    # optional positional raw-cohort path (skip flag values like --n / --cache)
     skip = {i + 1 for i, a in enumerate(argv) if a in ("--n", "--cache")}
     pos = [a for i, a in enumerate(argv)
            if not a.startswith("--") and i not in skip]
-    data_path = Path(pos[0]) if pos else (root / "dataset" / "train_data" / "train_set.tsv")
+    data_path = Path(pos[0]) if pos else (root / "dataset" / "train_data" / "train_set_features.tsv")
     tf = pd.read_csv(data_path, sep="\t")
     required_raw = ["uniprot", "protein_pos_start", "protein_pos_end"]
     missing = [c for c in required_raw if c not in tf.columns]
@@ -763,7 +689,6 @@ def _selftest(argv):
                     nbad += 1
     log(f"selftest DONE: {nbad} mismatches over {len(sample)}×{len(check)} cells")
     sys.exit(1 if nbad else 0)
-
 
 if __name__ == "__main__":
     main(sys.argv[1:])
