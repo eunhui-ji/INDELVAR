@@ -1,0 +1,14 @@
+# The single authority for which release each reference is pinned to.
+# generated contract can never declare a release the reference set does not use.
+# Changing a pin here is the ONLY sanctioned way to change a release. Editing a
+# release string in a generator instead would leave this file and the artifact
+reference	pinned_release	status
+uniprot	2026_02	REQUIRED
+gnomad_constraint	v4.0	REQUIRED
+gerp	ensembl_release-111	REQUIRED
+mane	v1.5	REQUIRED
+alphafold	v6	REQUIRED
+phylop	hg38_phyloP100way	REQUIRED
+grch38_fasta	ensembl_release-111	REQUIRED
+vep	116	REQUIRED
+charge_scale	charge_c1	REQUIRED

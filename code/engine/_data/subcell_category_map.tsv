@@ -1,0 +1,1702 @@
+# UniProt subcellular-location term -> feature category map.
+# vocabulary subcell.txt, UniProt Knowledgebase release 2026_02, which is the
+# same release as the pinned sequence data. Swiss-Prot is a section of that
+# release, not a separately versioned product.
+# Assignment is by ANCESTRY in the CV hierarchy (HI is-a / HP part-of), never by
+# substring matching. A term belongs to a category iff it is, or descends from,
+# that category's root term.
+# category : one or more of nucleus, cytoplasm, membrane, mitochondrion,
+#            secreted - semicolon separated when a term descends from several -
+#            or "other" when the term is a real CV location reaching none of
+#            them. The features are multi-label, so several columns may be 1.
+# Six of the seven features are decided by this table: the five CV-rooted
+# categories and `other`. The seventh, subcell_unknown, is NOT here and cannot be
+# produced by a term lookup - it is a property of the RECORD, set when a UniProt
+# record exists and annotates no subcellular location at all.
+# An ABSENT record is a different case again: it yields NA in all seven columns,
+# including subcell_unknown. Never 0, and never subcell_unknown = 1.
+cv_accession	cv_term	category	is_synonym
+SL-0476	A band	cytoplasm	no
+SL-0476	A line	cytoplasm	yes
+SL-0476	A-band	cytoplasm	yes
+SL-0009	AJ	other	yes
+SL-0488	ASC focus	cytoplasm	yes
+SL-0488	ASC speck	cytoplasm	yes
+SL-0316	Acidocalcisomal lumen	other	yes
+SL-0003	Acidocalcisomal membrane	membrane	yes
+SL-0002	Acidocalcisome	other	no
+SL-0316	Acidocalcisome lumen	other	no
+SL-0003	Acidocalcisome membrane	membrane	no
+SL-0004	Acrosomal inner membrane	membrane	yes
+SL-0005	Acrosomal lumen	other	yes
+SL-0006	Acrosomal membrane	membrane	yes
+SL-0447	Acrosomal outer membrane	membrane	yes
+SL-0007	Acrosomal vesicle	other	yes
+SL-0007	Acrosome	other	yes
+SL-0004	Acrosome inner membrane	membrane	yes
+SL-0005	Acrosome lumen	other	yes
+SL-0006	Acrosome membrane	membrane	yes
+SL-0447	Acrosome outer membrane	membrane	yes
+SL-0008	Actin cortical patch	cytoplasm	yes
+SL-0008	Actin patch	cytoplasm	yes
+SL-0009	Adherens junction	other	yes
+SL-0154	Adiposome	other	yes
+SL-0010	Aleurone grain	other	yes
+SL-0317	Aleurone grain lumen	other	yes
+SL-0011	Aleurone grain membrane	membrane	yes
+SL-0012	Amyloplast	other	yes
+SL-0013	Amyloplast inner membrane	membrane	yes
+SL-0014	Amyloplast membrane	membrane	yes
+SL-0491	Anammoxosome	other	no
+SL-0492	Anammoxosome membrane	membrane	no
+SL-0015	Apical cell membrane	membrane	no
+SL-0016	Apical lamina	secreted	yes
+SL-0015	Apical plasma membrane	membrane	yes
+SL-0017	Apicolateral cell membrane	membrane	no
+SL-0017	Apicolateral plasma membrane	membrane	yes
+SL-0018	Apicoplast	other	yes
+SL-0554	Apicoplast membrane	membrane	no
+SL-0019	Apoplast	secreted	yes
+SL-0132	Apparatus golgiensis	other	yes
+SL-0133	Apparatus golgiensis lumen	other	yes
+SL-0134	Apparatus golgiensis membrane	membrane	yes
+SL-0306	Archaeal flagella	other	yes
+SL-0306	Archaeal flagellar apparatus	other	yes
+SL-0306	Archaeal flagellum	other	no
+SL-0306	Archaellum	other	yes
+SL-0539	Ascospore	other	yes
+SL-0538	Ascus epiplasm	other	no
+SL-0020	Attachment organelle	other	yes
+SL-0021	Attachment organelle membrane	membrane	yes
+SL-0535	Autolysosome	other	no
+SL-0537	Autolysosome lumen	other	no
+SL-0536	Autolysosome membrane	membrane	no
+SL-0318	Autophagic vacuolar lumen	other	yes
+SL-0022	Autophagic vacuolar membrane	membrane	yes
+SL-0023	Autophagic vacuole	other	yes
+SL-0318	Autophagic vacuole lumen	other	yes
+SL-0022	Autophagic vacuole membrane	membrane	yes
+SL-0318	Autophagosomal lumen	other	yes
+SL-0022	Autophagosomal membrane	membrane	yes
+SL-0023	Autophagosome	other	yes
+SL-0318	Autophagosome lumen	other	yes
+SL-0022	Autophagosome membrane	membrane	yes
+SL-0279	Axon	other	yes
+SL-0279	Axon shaft	other	yes
+SL-0516	Axon terminal	other	yes
+SL-0186	B snurposome	nucleus	yes
+SL-0489	Bacterial extracellular vesicle	other	yes
+SL-0307	Bacterial flagella	other	yes
+SL-0358	Bacterial flagella filament	other	yes
+SL-0357	Bacterial flagella hook	other	yes
+SL-0307	Bacterial flagellar apparatus	other	yes
+SL-0142	Bacterial flagellar basal body	other	yes
+SL-0358	Bacterial flagellar filament	other	yes
+SL-0357	Bacterial flagellar hook	other	yes
+SL-0142	Bacterial flagellar kinetosome	other	yes
+SL-0142	Bacterial flagellar motor	other	yes
+SL-0307	Bacterial flagellum	other	no
+SL-0142	Bacterial flagellum basal body	other	no
+SL-0358	Bacterial flagellum filament	other	no
+SL-0357	Bacterial flagellum hook	other	no
+SL-0489	Bacterial membrane vesicle	other	yes
+SL-0544	Bacterial microcompartment	other	no
+SL-0043	Bacterial thylakoid	other	yes
+SL-0454	Barrier septum	other	no
+SL-0024	Basal cell membrane	membrane	no
+SL-0024	Basal plasma membrane	membrane	yes
+SL-0025	Basement membrane	secreted	yes
+SL-0539	Basidiospore	other	yes
+SL-0026	Basolateral cell membrane	membrane	no
+SL-0026	Basolateral plasma membrane	membrane	yes
+SL-0472	Bleb	other	yes
+SL-0027	Bud	other	no
+SL-0028	Bud membrane	membrane	no
+SL-0029	Bud neck	other	no
+SL-0030	Bud tip	other	no
+SL-0070	CCV	other	yes
+SL-0067	CGN	other	yes
+SL-0068	CGN membrane	membrane	yes
+SL-0075	COPI-coated vesicle	other	no
+SL-0321	COPI-coated vesicle lumen	other	no
+SL-0076	COPI-coated vesicle membrane	membrane	no
+SL-0077	COPII-coated vesicle	other	no
+SL-0322	COPII-coated vesicle lumen	other	no
+SL-0078	COPII-coated vesicle membrane	membrane	no
+SL-0073	CV	other	yes
+SL-0073	CVC	other	yes
+SL-0031	Cajal bodies	nucleus	yes
+SL-0031	Cajal body	nucleus	no
+SL-0032	Calyces	cytoplasm	yes
+SL-0032	Calyx	cytoplasm	yes
+SL-0033	Capsule	secreted	yes
+SL-0034	Carboxysome	other	no
+SL-0035	Caveola	membrane	yes
+SL-0035	Caveolae	membrane	yes
+SL-0138	Cell cortex	cytoplasm	yes
+SL-0036	Cell envelope	other	no
+SL-0037	Cell inner membrane	membrane	no
+SL-0038	Cell junction	other	no
+SL-0009	Cell junction, adherens junction	other	yes
+SL-0092	Cell junction, desmosome	other	yes
+SL-0118	Cell junction, focal adhesion	other	yes
+SL-0124	Cell junction, gap junction	other	yes
+SL-0137	Cell junction, hemidesmosome	other	yes
+SL-0192	Cell junction, paranodal septate junction	other	yes
+SL-0208	Cell junction, plasmodesma	other	yes
+SL-0246	Cell junction, septate junction	other	yes
+SL-0265	Cell junction, tight junction	other	yes
+SL-0039	Cell membrane	membrane	no
+SL-0218	Cell membrane, porosome	membrane	yes
+SL-0238	Cell membrane, sarcolemma	membrane	yes
+SL-0505	Cell membrane, sarcolemma, T-tubule	membrane	yes
+SL-0040	Cell outer membrane	membrane	no
+SL-0280	Cell projection	other	no
+SL-0020	Cell projection, attachment organelle	other	yes
+SL-0021	Cell projection, attachment organelle membrane	membrane	yes
+SL-0279	Cell projection, axon	other	yes
+SL-0472	Cell projection, bleb	other	yes
+SL-0066	Cell projection, cilium	other	yes
+SL-0305	Cell projection, cilium membrane	membrane	yes
+SL-0117	Cell projection, cilium, flagellum	other	yes
+SL-0115	Cell projection, cilium, flagellum membrane	membrane	yes
+SL-0458	Cell projection, cilium, photoreceptor outer segment	other	yes
+SL-0283	Cell projection, dendrite	other	yes
+SL-0284	Cell projection, dendritic spine	other	yes
+SL-0285	Cell projection, dendritic spine membrane	membrane	yes
+SL-0286	Cell projection, filopodium	other	yes
+SL-0287	Cell projection, filopodium membrane	membrane	yes
+SL-0470	Cell projection, filopodium tip	other	yes
+SL-0288	Cell projection, growth cone	other	yes
+SL-0289	Cell projection, growth cone membrane	membrane	yes
+SL-0148	Cell projection, invadopodium	other	yes
+SL-0290	Cell projection, invadopodium membrane	membrane	yes
+SL-0460	Cell projection, kinocilium	other	yes
+SL-0291	Cell projection, lamellipodium	other	yes
+SL-0292	Cell projection, lamellipodium membrane	membrane	yes
+SL-0293	Cell projection, microvillus	other	yes
+SL-0294	Cell projection, microvillus membrane	membrane	yes
+SL-0518	Cell projection, neuron projection	other	yes
+SL-0473	Cell projection, phagocytic cup	other	yes
+SL-0295	Cell projection, podosome	other	yes
+SL-0296	Cell projection, podosome membrane	membrane	yes
+SL-0298	Cell projection, pseudopodium	other	yes
+SL-0299	Cell projection, pseudopodium membrane	membrane	yes
+SL-0471	Cell projection, pseudopodium tip	other	yes
+SL-0551	Cell projection, rhabdomere	other	yes
+SL-0552	Cell projection, rhabdomere membrane	membrane	yes
+SL-0300	Cell projection, ruffle	other	yes
+SL-0301	Cell projection, ruffle membrane	membrane	yes
+SL-0302	Cell projection, stereocilium	other	yes
+SL-0303	Cell projection, stereocilium membrane	membrane	yes
+SL-0141	Cell projection, uropodium	other	yes
+SL-0280	Cell protrusion	other	yes
+SL-0455	Cell septum	other	no
+SL-0310	Cell surface	other	no
+SL-0456	Cell tip	other	no
+SL-0041	Cell wall	secreted	yes
+SL-0028	Cellular bud membrane	membrane	yes
+SL-0029	Cellular bud neck	other	yes
+SL-0030	Cellular bud tip	other	yes
+SL-0042	Cellular chromatophore membrane	membrane	no
+SL-0043	Cellular thylakoid	other	no
+SL-0044	Cellular thylakoid lumen	other	no
+SL-0045	Cellular thylakoid membrane	membrane	no
+SL-0485	Centriolar satellite	cytoplasm	yes
+SL-0046	Centriole	cytoplasm	yes
+SL-0047	Centromere	other	yes
+SL-0048	Centrosome	cytoplasm	yes
+SL-0539	Chlamydospore	other	yes
+SL-0049	Chloroplast	other	yes
+SL-0050	Chloroplast envelope	other	yes
+SL-0051	Chloroplast inner membrane	membrane	yes
+SL-0052	Chloroplast intermembrane space	other	yes
+SL-0053	Chloroplast membrane	membrane	yes
+SL-0139	Chloroplast nucleoid	other	yes
+SL-0054	Chloroplast outer membrane	membrane	yes
+SL-0055	Chloroplast stroma	other	yes
+SL-0056	Chloroplast thylakoid	other	yes
+SL-0057	Chloroplast thylakoid lumen	other	yes
+SL-0058	Chloroplast thylakoid membrane	membrane	yes
+SL-0050	Chloroplastic envelope	other	yes
+SL-0051	Chloroplastic inner membrane	membrane	yes
+SL-0052	Chloroplastic intermembrane space	other	yes
+SL-0053	Chloroplastic membrane	membrane	yes
+SL-0139	Chloroplastic nucleoid	other	yes
+SL-0054	Chloroplastic outer membrane	membrane	yes
+SL-0055	Chloroplastic stroma	other	yes
+SL-0060	Chlorosomal envelope	other	yes
+SL-0059	Chlorosome	other	no
+SL-0060	Chlorosome envelope	other	yes
+SL-0060	Chlorosome, chlorosome envelope	other	yes
+SL-0349	Chromaffin granular lumen	other	yes
+SL-0062	Chromaffin granular membrane	membrane	yes
+SL-0061	Chromaffin granule	other	yes
+SL-0349	Chromaffin granule lumen	other	yes
+SL-0062	Chromaffin granule membrane	membrane	yes
+SL-0042	Chromatophore membrane	membrane	yes
+SL-0063	Chromoplast	other	yes
+SL-0064	Chromoplast membrane	membrane	yes
+SL-0065	Chromoplast stroma	other	yes
+SL-0064	Chromoplastic membrane	membrane	yes
+SL-0065	Chromoplastic stroma	other	yes
+SL-0468	Chromosome	other	no
+SL-0047	Chromosome, centromere	other	yes
+SL-0149	Chromosome, centromere, kinetochore	other	yes
+SL-0047	Chromosome, pericentric region	other	yes
+SL-0276	Chromosome, telomere	other	yes
+SL-0276	Chromosome, telomeric region	other	yes
+SL-0066	Cilia	other	yes
+SL-0304	Ciliary axoneme	cytoplasm	yes
+SL-0087	Ciliary basal body	cytoplasm	yes
+SL-0087	Ciliary kinetosome	cytoplasm	yes
+SL-0305	Ciliary membrane	membrane	yes
+SL-0066	Cilium	other	yes
+SL-0304	Cilium axoneme	cytoplasm	yes
+SL-0087	Cilium basal body	cytoplasm	yes
+SL-0087	Cilium kinetosome	cytoplasm	yes
+SL-0305	Cilium membrane	membrane	yes
+SL-0069	Clathrin-coated pit	membrane	yes
+SL-0070	Clathrin-coated vesicle	other	yes
+SL-0319	Clathrin-coated vesicle lumen	other	yes
+SL-0071	Clathrin-coated vesicle membrane	membrane	yes
+SL-0319	Clathrin-coated vesicular lumen	other	yes
+SL-0071	Clathrin-coated vesicular membrane	membrane	yes
+SL-0467	Cleavage furrow	other	no
+SL-0177	Cnidocyst	other	yes
+SL-0075	Coat protein complex I	other	yes
+SL-0077	Coat protein complexes II	other	yes
+SL-0322	Coat protein complexes II lumen	other	yes
+SL-0078	Coat protein complexes II membrane	membrane	yes
+SL-0072	Coated pit	membrane	yes
+SL-0031	Coiled body	nucleus	yes
+SL-0132	Complexus golgiensis	other	yes
+SL-0133	Complexus golgiensis lumen	other	yes
+SL-0134	Complexus golgiensis membrane	membrane	yes
+SL-0124	Connexons	other	yes
+SL-0073	Contracile vacuole complex	other	yes
+SL-0320	Contractile vacuolar lumen	other	yes
+SL-0074	Contractile vacuolar membrane	membrane	yes
+SL-0073	Contractile vacuole	other	no
+SL-0320	Contractile vacuole lumen	other	no
+SL-0074	Contractile vacuole membrane	membrane	no
+SL-0079	Cornified envelope	other	no
+SL-0174	Corpuscula multivesicularis	other	yes
+SL-0340	Corpuscula multivesicularis lumen	other	yes
+SL-0175	Corpuscula multivesicularis membrane	membrane	yes
+SL-0541	Cortical granule	other	no
+SL-0541	Cortical vesicle	other	yes
+SL-0080	Cvt vesicle	other	yes
+SL-0323	Cvt vesicle lumen	other	yes
+SL-0081	Cvt vesicle membrane	membrane	yes
+SL-0082	Cyanelle	other	yes
+SL-0479	Cyanelle envelope	other	yes
+SL-0480	Cyanelle inner membrane	membrane	yes
+SL-0481	Cyanelle intermembrane space	other	yes
+SL-0083	Cyanelle membrane	membrane	yes
+SL-0482	Cyanelle outer membrane	membrane	yes
+SL-0481	Cyanelle periplasm	other	yes
+SL-0350	Cyanelle stroma	other	yes
+SL-0277	Cyanelle thylakoid	other	yes
+SL-0084	Cyanelle thylakoid lumen	other	yes
+SL-0085	Cyanelle thylakoid membrane	membrane	yes
+SL-0082	Cyanoplast	other	yes
+SL-0543	Cytolytic granule	other	no
+SL-0546	Cytolytic granule lumen	other	no
+SL-0547	Cytolytic granule membrane	membrane	no
+SL-0086	Cytoplasm	cytoplasm	no
+SL-0495	Cytoplasm, Cytoplasmic ribonucleoprotein granule	cytoplasm	yes
+SL-0230	Cytoplasm, P-body	cytoplasm	yes
+SL-0496	Cytoplasm, Stress granule	cytoplasm	yes
+SL-0553	Cytoplasm, U-body	cytoplasm	yes
+SL-0138	Cytoplasm, cell cortex	cytoplasm	yes
+SL-0090	Cytoplasm, cytoskeleton	cytoplasm	yes
+SL-0008	Cytoplasm, cytoskeleton, actin patch	cytoplasm	yes
+SL-0304	Cytoplasm, cytoskeleton, cilium axoneme	cytoplasm	yes
+SL-0087	Cytoplasm, cytoskeleton, cilium basal body	cytoplasm	yes
+SL-0114	Cytoplasm, cytoskeleton, flagellum axoneme	cytoplasm	yes
+SL-0308	Cytoplasm, cytoskeleton, flagellum basal body	cytoplasm	yes
+SL-0484	Cytoplasm, cytoskeleton, microtubule organizing center	cytoplasm	yes
+SL-0048	Cytoplasm, cytoskeleton, microtubule organizing center, centrosome	cytoplasm	yes
+SL-0485	Cytoplasm, cytoskeleton, microtubule organizing center, centrosome, centriolar satellite	cytoplasm	yes
+SL-0046	Cytoplasm, cytoskeleton, microtubule organizing center, centrosome, centriole	cytoplasm	yes
+SL-0252	Cytoplasm, cytoskeleton, microtubule organizing center, spindle pole body	cytoplasm	yes
+SL-0199	Cytoplasm, cytoskeleton, perinuclear theca	cytoplasm	yes
+SL-0032	Cytoplasm, cytoskeleton, perinuclear theca, calyx	cytoplasm	yes
+SL-0207	Cytoplasm, cytoskeleton, phragmoplast	cytoplasm	yes
+SL-0251	Cytoplasm, cytoskeleton, spindle	cytoplasm	yes
+SL-0448	Cytoplasm, cytoskeleton, spindle pole	cytoplasm	yes
+SL-0501	Cytoplasm, cytoskeleton, stress fiber	cytoplasm	yes
+SL-0091	Cytoplasm, cytosol	cytoplasm	yes
+SL-0312	Cytoplasm, myofibril	cytoplasm	yes
+SL-0313	Cytoplasm, myofibril, sarcomere	cytoplasm	yes
+SL-0476	Cytoplasm, myofibril, sarcomere, A band	cytoplasm	yes
+SL-0477	Cytoplasm, myofibril, sarcomere, H zone	cytoplasm	yes
+SL-0478	Cytoplasm, myofibril, sarcomere, I band	cytoplasm	yes
+SL-0315	Cytoplasm, myofibril, sarcomere, M line	cytoplasm	yes
+SL-0314	Cytoplasm, myofibril, sarcomere, Z line	cytoplasm	yes
+SL-0187	Cytoplasm, nucleoid	cytoplasm	yes
+SL-0198	Cytoplasm, perinuclear region	cytoplasm	yes
+SL-0311	Cytoplasm, sarcoplasm	cytoplasm	yes
+SL-0553	Cytoplasmic U snRNP body	cytoplasm	yes
+SL-0281	Cytoplasmic granule	other	no
+SL-0324	Cytoplasmic granule lumen	other	no
+SL-0282	Cytoplasmic granule membrane	membrane	no
+SL-0230	Cytoplasmic mRNA processing body	cytoplasm	yes
+SL-0495	Cytoplasmic mRNP granule	cytoplasm	yes
+SL-0495	Cytoplasmic mRNP granules	cytoplasm	yes
+SL-0037	Cytoplasmic membrane	membrane	yes
+SL-0495	Cytoplasmic ribonucleoprotein granule	cytoplasm	no
+SL-9910	Cytoplasmic side	other	no
+SL-0088	Cytoplasmic vesicle	other	no
+SL-0325	Cytoplasmic vesicle lumen	other	no
+SL-0089	Cytoplasmic vesicle membrane	membrane	no
+SL-0075	Cytoplasmic vesicle, COPI-coated vesicle	other	yes
+SL-0321	Cytoplasmic vesicle, COPI-coated vesicle lumen	other	yes
+SL-0076	Cytoplasmic vesicle, COPI-coated vesicle membrane	membrane	yes
+SL-0077	Cytoplasmic vesicle, COPII-coated vesicle	other	yes
+SL-0322	Cytoplasmic vesicle, COPII-coated vesicle lumen	other	yes
+SL-0078	Cytoplasmic vesicle, COPII-coated vesicle membrane	membrane	yes
+SL-0023	Cytoplasmic vesicle, autophagosome	other	yes
+SL-0318	Cytoplasmic vesicle, autophagosome lumen	other	yes
+SL-0022	Cytoplasmic vesicle, autophagosome membrane	membrane	yes
+SL-0070	Cytoplasmic vesicle, clathrin-coated vesicle	other	yes
+SL-0319	Cytoplasmic vesicle, clathrin-coated vesicle lumen	other	yes
+SL-0071	Cytoplasmic vesicle, clathrin-coated vesicle membrane	membrane	yes
+SL-0080	Cytoplasmic vesicle, cvt vesicle	other	yes
+SL-0323	Cytoplasmic vesicle, cvt vesicle lumen	other	yes
+SL-0081	Cytoplasmic vesicle, cvt vesicle membrane	membrane	yes
+SL-0109	Cytoplasmic vesicle, esterosome	other	yes
+SL-0328	Cytoplasmic vesicle, esterosome lumen	other	yes
+SL-0108	Cytoplasmic vesicle, esterosome membrane	membrane	yes
+SL-0206	Cytoplasmic vesicle, phagosome	other	yes
+SL-0342	Cytoplasmic vesicle, phagosome lumen	other	yes
+SL-0205	Cytoplasmic vesicle, phagosome membrane	membrane	yes
+SL-0244	Cytoplasmic vesicle, secretory vesicle	other	yes
+SL-0347	Cytoplasmic vesicle, secretory vesicle lumen	other	yes
+SL-0245	Cytoplasmic vesicle, secretory vesicle membrane	membrane	yes
+SL-0541	Cytoplasmic vesicle, secretory vesicle, Cortical granule	other	yes
+SL-0007	Cytoplasmic vesicle, secretory vesicle, acrosome	other	yes
+SL-0004	Cytoplasmic vesicle, secretory vesicle, acrosome inner membrane	membrane	yes
+SL-0005	Cytoplasmic vesicle, secretory vesicle, acrosome lumen	other	yes
+SL-0006	Cytoplasmic vesicle, secretory vesicle, acrosome membrane	membrane	yes
+SL-0447	Cytoplasmic vesicle, secretory vesicle, acrosome outer membrane	membrane	yes
+SL-0061	Cytoplasmic vesicle, secretory vesicle, chromaffin granule	other	yes
+SL-0349	Cytoplasmic vesicle, secretory vesicle, chromaffin granule lumen	other	yes
+SL-0062	Cytoplasmic vesicle, secretory vesicle, chromaffin granule membrane	membrane	yes
+SL-0163	Cytoplasmic vesicle, secretory vesicle, microneme	other	yes
+SL-0339	Cytoplasmic vesicle, secretory vesicle, microneme lumen	other	yes
+SL-0164	Cytoplasmic vesicle, secretory vesicle, microneme membrane	membrane	yes
+SL-0526	Cytoplasmic vesicle, secretory vesicle, neuronal dense core vesicle	other	yes
+SL-0532	Cytoplasmic vesicle, secretory vesicle, neuronal dense core vesicle membrane	membrane	yes
+SL-0233	Cytoplasmic vesicle, secretory vesicle, rhoptry	other	yes
+SL-0346	Cytoplasmic vesicle, secretory vesicle, rhoptry lumen	other	yes
+SL-0234	Cytoplasmic vesicle, secretory vesicle, rhoptry membrane	membrane	yes
+SL-0259	Cytoplasmic vesicle, secretory vesicle, synaptic vesicle	other	yes
+SL-0348	Cytoplasmic vesicle, secretory vesicle, synaptic vesicle lumen	other	yes
+SL-0260	Cytoplasmic vesicle, secretory vesicle, synaptic vesicle membrane	membrane	yes
+SL-0032	Cytoskeletal calyx	cytoplasm	yes
+SL-0090	Cytoskeleton	cytoplasm	yes
+SL-0091	Cytosol	cytoplasm	yes
+SL-0230	DCP bodies	cytoplasm	yes
+SL-0092	DS	other	yes
+SL-0230	Dcp body	cytoplasm	yes
+SL-0535	Degrading autophagic vacuole	other	yes
+SL-0537	Degrading autophagic vacuole lumen	other	yes
+SL-0283	Dendrite	other	yes
+SL-0284	Dendritic spine	other	yes
+SL-0285	Dendritic spine membrane	membrane	yes
+SL-0092	Desmosome	other	yes
+SL-0135	Dictyosome	other	yes
+SL-0334	Dictyosome lumen	other	yes
+SL-0136	Dictyosome membrane	membrane	yes
+SL-0542	DynAP	cytoplasm	yes
+SL-0542	Dynein axonemal particle	cytoplasm	no
+SL-0174	ECV	other	yes
+SL-0340	ECV lumen	other	yes
+SL-0175	ECV membrane	membrane	yes
+SL-0077	ER to Golgi transport vesicle	other	yes
+SL-0322	ER to Golgi transport vesicle lumen	other	yes
+SL-0078	ER to Golgi transport vesicle membrane	membrane	yes
+SL-0098	ER-Golgi intermediate compartment	other	yes
+SL-0326	ER-Golgi intermediate compartment lumen	other	yes
+SL-0099	ER-Golgi intermediate compartment membrane	membrane	yes
+SL-0232	ERC	other	yes
+SL-0098	ERGIC	other	yes
+SL-0326	ERGIC lumen	other	yes
+SL-0099	ERGIC membrane	membrane	yes
+SL-0337	Early endosomal lumen	other	yes
+SL-0093	Early endosomal membrane	membrane	yes
+SL-0094	Early endosome	other	no
+SL-0337	Early endosome lumen	other	no
+SL-0093	Early endosome membrane	membrane	no
+SL-0540	Egg coat	secreted	yes
+SL-0550	Encapsulin nanocompartment	other	no
+SL-0031	Endobodies	nucleus	yes
+SL-0201	Endoflagellum	other	yes
+SL-0147	Endomembrane	membrane	yes
+SL-0147	Endomembrane system	membrane	no
+SL-0095	Endoplasmic reticulum	other	no
+SL-0096	Endoplasmic reticulum lumen	other	no
+SL-0097	Endoplasmic reticulum membrane	membrane	no
+SL-0530	Endoplasmic reticulum, spine apparatus	other	yes
+SL-0098	Endoplasmic reticulum-Golgi intermediate compartment	other	no
+SL-0326	Endoplasmic reticulum-Golgi intermediate compartment lumen	other	no
+SL-0099	Endoplasmic reticulum-Golgi intermediate compartment membrane	membrane	no
+SL-0174	Endosomal carrier vesicle	other	yes
+SL-0340	Endosomal carrier vesicle lumen	other	yes
+SL-0175	Endosomal carrier vesicle membrane	membrane	yes
+SL-0327	Endosomal lumen	other	yes
+SL-0100	Endosomal membrane	membrane	yes
+SL-0232	Endosomal recycling compartment	other	yes
+SL-0101	Endosome	other	no
+SL-0327	Endosome lumen	other	no
+SL-0100	Endosome membrane	membrane	no
+SL-0174	Endosome, multivesicular body	other	yes
+SL-0340	Endosome, multivesicular body lumen	other	yes
+SL-0175	Endosome, multivesicular body membrane	membrane	yes
+SL-0036	Envelope	other	yes
+SL-0328	Esterosomal lumen	other	yes
+SL-0108	Esterosomal membrane	membrane	yes
+SL-0109	Esterosome	other	yes
+SL-0328	Esterosome lumen	other	yes
+SL-0108	Esterosome membrane	membrane	yes
+SL-0110	Etioplast	other	yes
+SL-0329	Etioplast membrane	membrane	yes
+SL-0226	Etioplast prolamellar body	other	yes
+SL-0330	Etioplast stroma	other	yes
+SL-0367	Exosporium	other	yes
+SL-0466	Extracellular exosome	secreted	yes
+SL-0111	Extracellular matrix	secreted	yes
+SL-9911	Extracellular side	other	no
+SL-0112	Extracellular space	secreted	yes
+SL-0499	Extracellular vesicle	other	no
+SL-0500	Extracellular vesicle membrane	membrane	no
+SL-0489	Extracellular vesicle, bacterial extracellular vesicle	other	yes
+SL-0466	Extracellular vesicular exosome	secreted	yes
+SL-9918	Extravirionic side	other	no
+SL-0286	Filopodia	other	yes
+SL-0287	Filopodia membrane	membrane	yes
+SL-0470	Filopodia tip	other	yes
+SL-0286	Filopodium	other	yes
+SL-0287	Filopodium membrane	membrane	yes
+SL-0470	Filopodium tip	other	yes
+SL-0113	Fimbria	other	yes
+SL-0113	Fimbrium	other	no
+SL-0117	Flagella	other	yes
+SL-0114	Flagellar axoneme	cytoplasm	yes
+SL-0308	Flagellar basal body	cytoplasm	yes
+SL-0308	Flagellar kinetosome	cytoplasm	yes
+SL-0115	Flagellar membrane	membrane	yes
+SL-0116	Flagellar pocket	other	no
+SL-0117	Flagellum	other	yes
+SL-0114	Flagellum axoneme	cytoplasm	yes
+SL-0308	Flagellum basal body	cytoplasm	yes
+SL-0308	Flagellum kinetosome	cytoplasm	yes
+SL-0115	Flagellum membrane	membrane	yes
+SL-0490	Flemming body	other	yes
+SL-0118	Focal adhesion	other	yes
+SL-0119	Forespore	other	no
+SL-0120	Forespore inner membrane	membrane	no
+SL-0121	Forespore intermembrane space	other	no
+SL-0122	Forespore membrane	membrane	no
+SL-0123	Forespore outer membrane	membrane	no
+SL-9902	GPI-anchor	other	no
+SL-9920	GPI-like-anchor	other	no
+SL-0230	GW bodies	cytoplasm	yes
+SL-0230	GW body	cytoplasm	yes
+SL-0230	GW182 bodies	cytoplasm	yes
+SL-0230	GW182 body	cytoplasm	yes
+SL-0230	GWB	cytoplasm	yes
+SL-0124	Gap junction	other	yes
+SL-0125	Gas vesicle	other	no
+SL-0331	Gas vesicle lumen	other	no
+SL-0126	Gas vesicle shell	other	no
+SL-0230	Gawky bodies	cytoplasm	yes
+SL-0230	Gawky body	cytoplasm	yes
+SL-0127	Gem	nucleus	yes
+SL-0332	Glycosomal lumen	other	yes
+SL-0332	Glycosomal matrix	other	yes
+SL-0128	Glycosomal membrane	membrane	yes
+SL-0129	Glycosome	other	no
+SL-0332	Glycosome lumen	other	yes
+SL-0332	Glycosome matrix	other	no
+SL-0128	Glycosome membrane	membrane	no
+SL-9902	Glycosylphosphatidylinositol anchor	other	yes
+SL-9902	Glycosylphospholipidinositol anchor	other	yes
+SL-9920	Glycosylsphingolipidinositol anchor	other	yes
+SL-0333	Glyoxysomal lumen	other	yes
+SL-0333	Glyoxysomal matrix	other	yes
+SL-0130	Glyoxysomal membrane	membrane	yes
+SL-0131	Glyoxysome	other	no
+SL-0333	Glyoxysome lumen	other	yes
+SL-0333	Glyoxysome matrix	other	no
+SL-0130	Glyoxysome membrane	membrane	no
+SL-0132	Golgi	other	yes
+SL-0132	Golgi apparatus	other	no
+SL-0133	Golgi apparatus lumen	other	no
+SL-0134	Golgi apparatus membrane	membrane	no
+SL-0135	Golgi apparatus, Golgi stack	other	yes
+SL-0334	Golgi apparatus, Golgi stack lumen	other	yes
+SL-0136	Golgi apparatus, Golgi stack membrane	membrane	yes
+SL-0067	Golgi apparatus, cis-Golgi network	other	yes
+SL-0068	Golgi apparatus, cis-Golgi network membrane	membrane	yes
+SL-0266	Golgi apparatus, trans-Golgi network	other	yes
+SL-0267	Golgi apparatus, trans-Golgi network membrane	membrane	yes
+SL-0135	Golgi bodies	other	yes
+SL-0334	Golgi bodies lumen	other	yes
+SL-0136	Golgi bodies membrane	membrane	yes
+SL-0135	Golgi body	other	yes
+SL-0334	Golgi body lumen	other	yes
+SL-0136	Golgi body membrane	membrane	yes
+SL-0067	Golgi cis-face	other	yes
+SL-0068	Golgi cis-face membrane	membrane	yes
+SL-0136	Golgi cisterna membrane	membrane	yes
+SL-0132	Golgi complex	other	yes
+SL-0133	Golgi complex lumen	other	yes
+SL-0134	Golgi complex membrane	membrane	yes
+SL-0521	Golgi elements	other	yes
+SL-0133	Golgi lumen	other	yes
+SL-0134	Golgi membrane	membrane	yes
+SL-0521	Golgi outpost	other	no
+SL-0135	Golgi stack	other	no
+SL-0334	Golgi stack lumen	other	no
+SL-0136	Golgi stack membrane	membrane	no
+SL-0266	Golgi trans-face	other	yes
+SL-0267	Golgi trans-face membrane	membrane	yes
+SL-0521	Golgi vesicles	other	yes
+SL-0018	Golgi-adjunct organelle	other	yes
+SL-0027	Growing bud	other	yes
+SL-0288	Growth cone	other	yes
+SL-0289	Growth cone membrane	membrane	yes
+SL-0477	H band	cytoplasm	yes
+SL-0477	H disc	cytoplasm	yes
+SL-0477	H disk	cytoplasm	yes
+SL-0477	H zone	cytoplasm	no
+SL-0477	H-band	cytoplasm	yes
+SL-0137	Hemidesmosome	other	yes
+SL-0431	Host	other	no
+SL-0396	Host CGN	other	yes
+SL-0397	Host CGN membrane	membrane	yes
+SL-0453	Host ECV	other	yes
+SL-0391	Host ER-Golgi intermediate compartment	other	yes
+SL-0392	Host ER-Golgi intermediate compartment membrane	membrane	yes
+SL-0391	Host ERGIC	other	yes
+SL-0392	Host ERGIC membrane	membrane	yes
+SL-0395	Host Golgi	other	yes
+SL-0395	Host Golgi apparatus	other	no
+SL-0426	Host Golgi apparatus membrane	membrane	no
+SL-0396	Host Golgi apparatus, host cis-Golgi network	other	yes
+SL-0397	Host Golgi apparatus, host cis-Golgi network membrane	membrane	yes
+SL-0463	Host Golgi apparatus, host trans-Golgi network	other	yes
+SL-0464	Host Golgi apparatus, host trans-Golgi network membrane	membrane	yes
+SL-0396	Host Golgi cis-face	other	yes
+SL-0397	Host Golgi cis-face membrane	membrane	yes
+SL-0395	Host Golgi complex	other	yes
+SL-0426	Host Golgi complex membrane	membrane	yes
+SL-0426	Host Golgi membrane	membrane	yes
+SL-0463	Host Golgi trans-face	other	yes
+SL-0464	Host Golgi trans-face membrane	membrane	yes
+SL-0391	Host IC	other	yes
+SL-0392	Host IC membrane	membrane	yes
+SL-0453	Host MVB	other	yes
+SL-0385	Host PD	other	yes
+SL-0422	Host RER	other	yes
+SL-0444	Host SER	other	yes
+SL-0463	Host TGN	other	yes
+SL-0464	Host TGN membrane	membrane	yes
+SL-0391	Host VTC	other	yes
+SL-0392	Host VTC membrane	membrane	yes
+SL-0401	Host adiposome	other	yes
+SL-0372	Host apical cell membrane	membrane	no
+SL-0372	Host apical plasma membrane	membrane	yes
+SL-0555	Host apoplast	other	yes
+SL-0395	Host apparatus golgiensis	other	yes
+SL-0426	Host apparatus golgiensis membrane	membrane	yes
+SL-0459	Host basolateral cell membrane	membrane	no
+SL-0459	Host basolateral plasma membrane	membrane	yes
+SL-0428	Host caveola	membrane	yes
+SL-0428	Host caveolae	membrane	yes
+SL-0427	Host cell	other	no
+SL-0555	Host cell apoplast	other	no
+SL-0421	Host cell envelope	other	no
+SL-0373	Host cell inner membrane	membrane	no
+SL-0374	Host cell junction	other	no
+SL-0385	Host cell junction, host plasmodesma	other	yes
+SL-0375	Host cell membrane	membrane	no
+SL-0376	Host cell outer membrane	membrane	no
+SL-0377	Host cell projection	other	no
+SL-0379	Host cell projection, host filopodium	other	yes
+SL-0377	Host cell protrusion	other	yes
+SL-0378	Host cell surface	other	no
+SL-0424	Host cell wall	other	no
+SL-0429	Host cellular thylakoid	other	no
+SL-0430	Host cellular thylakoid membrane	membrane	no
+SL-0483	Host chloroplast envelope	other	no
+SL-0483	Host chloroplastic envelope	other	yes
+SL-0396	Host cis-Golgi	other	yes
+SL-0396	Host cis-Golgi complex	other	yes
+SL-0397	Host cis-Golgi complex membrane	membrane	yes
+SL-0397	Host cis-Golgi membrane	membrane	yes
+SL-0396	Host cis-Golgi network	other	yes
+SL-0397	Host cis-Golgi network membrane	membrane	yes
+SL-0395	Host complexus golgiensis	other	yes
+SL-0426	Host complexus golgiensis membrane	membrane	yes
+SL-0453	Host corpuscula multivesicularis	other	yes
+SL-0381	Host cytoplasm	other	no
+SL-0383	Host cytoplasm, host cytoskeleton	other	yes
+SL-0384	Host cytoplasm, host cytosol	other	yes
+SL-0382	Host cytoplasm, host perinuclear region	other	yes
+SL-0375	Host cytoplasmic membrane	membrane	yes
+SL-0386	Host cytoplasmic vesicle	other	no
+SL-0387	Host cytoplasmic vesicle membrane	membrane	no
+SL-0432	Host cytoplasmic vesicle, host phagosome	other	yes
+SL-0433	Host cytoplasmic vesicle, host phagosome membrane	membrane	yes
+SL-0504	Host cytoplasmic vesicle, host secretory vesicle	other	yes
+SL-0503	Host cytoplasmic vesicle, host secretory vesicle, host synaptic vesicle membrane	other	yes
+SL-0383	Host cytoskeleton	other	yes
+SL-0384	Host cytosol	other	yes
+SL-0462	Host early endosomal membrane	membrane	yes
+SL-0461	Host early endosome	other	no
+SL-0462	Host early endosome membrane	membrane	no
+SL-0398	Host endomembrane	membrane	yes
+SL-0398	Host endomembrane system	membrane	no
+SL-0388	Host endoplasmic reticulum	other	no
+SL-0389	Host endoplasmic reticulum lumen	other	no
+SL-0390	Host endoplasmic reticulum membrane	membrane	no
+SL-0391	Host endoplasmic reticulum-Golgi intermediate compartment	other	no
+SL-0392	Host endoplasmic reticulum-Golgi intermediate compartment membrane	membrane	no
+SL-0453	Host endosomal carrier vesicle	other	yes
+SL-0394	Host endosomal membrane	membrane	yes
+SL-0393	Host endosome	other	no
+SL-0394	Host endosome membrane	membrane	no
+SL-0453	Host endosome, host multivesicular body	other	yes
+SL-0421	Host envelope	other	yes
+SL-0425	Host extracellular space	other	no
+SL-0379	Host filopodia	other	yes
+SL-0379	Host filopodium	other	yes
+SL-0474	Host glyoxysome	other	no
+SL-0373	Host inner membrane	membrane	yes
+SL-0409	Host inner mitochondrial membrane	membrane	yes
+SL-0419	Host inner nuclear membrane	membrane	yes
+SL-0425	Host intercellular space	other	yes
+SL-0391	Host intermediate compartment	other	yes
+SL-0392	Host intermediate compartment membrane	membrane	yes
+SL-0413	Host karyolymph	other	yes
+SL-0413	Host karyoplasm	other	yes
+SL-0415	Host karyotheca	other	yes
+SL-0400	Host late endosomal membrane	membrane	yes
+SL-0399	Host late endosome	other	no
+SL-0400	Host late endosome membrane	membrane	no
+SL-0401	Host lipid bodies	other	yes
+SL-0401	Host lipid body	other	yes
+SL-0401	Host lipid droplet	other	no
+SL-0401	Host lipid particle	other	yes
+SL-0404	Host lysosomal membrane	membrane	yes
+SL-0403	Host lysosome	other	no
+SL-0404	Host lysosome membrane	membrane	no
+SL-0380	Host membrane	membrane	no
+SL-0428	Host membrane microdomain	membrane	yes
+SL-0428	Host membrane, host caveola	membrane	yes
+SL-0406	Host microsomal membrane	membrane	yes
+SL-0405	Host microsome	other	no
+SL-0406	Host microsome membrane	membrane	no
+SL-0379	Host microspike	other	yes
+SL-0408	Host mitochondrial envelope	other	yes
+SL-0409	Host mitochondrial inner membrane	membrane	yes
+SL-0410	Host mitochondrial membrane	membrane	yes
+SL-0411	Host mitochondrial outer membrane	membrane	yes
+SL-0407	Host mitochondrion	other	no
+SL-0408	Host mitochondrion envelope	other	no
+SL-0409	Host mitochondrion inner membrane	membrane	no
+SL-0410	Host mitochondrion membrane	membrane	no
+SL-0411	Host mitochondrion outer membrane	membrane	no
+SL-0401	Host monolayer-surrounded lipid storage body	other	yes
+SL-0453	Host multivesicular bodies	other	yes
+SL-0453	Host multivesicular body	other	yes
+SL-0415	Host nuclear envelope	other	yes
+SL-0419	Host nuclear inner membrane	membrane	yes
+SL-0416	Host nuclear lamina	other	yes
+SL-0417	Host nuclear matrix	other	yes
+SL-0418	Host nuclear membrane	membrane	yes
+SL-0446	Host nuclear outer membrane	membrane	yes
+SL-0382	Host nuclear periphery	other	yes
+SL-0417	Host nuclear scaffold	other	yes
+SL-0417	Host nuclear skeleton	other	yes
+SL-0415	Host nucleolemma	other	yes
+SL-0412	Host nucleoli	other	yes
+SL-0412	Host nucleolus	other	yes
+SL-0413	Host nucleoplasm	other	yes
+SL-0414	Host nucleus	other	no
+SL-0415	Host nucleus envelope	other	no
+SL-0419	Host nucleus inner membrane	membrane	no
+SL-0416	Host nucleus lamina	other	no
+SL-0417	Host nucleus matrix	other	no
+SL-0418	Host nucleus membrane	membrane	no
+SL-0446	Host nucleus outer membrane	membrane	no
+SL-0412	Host nucleus, host nucleolus	other	yes
+SL-0413	Host nucleus, host nucleoplasm	other	yes
+SL-0401	Host oil bodies	other	yes
+SL-0401	Host oil body	other	yes
+SL-0401	Host oleosome	other	yes
+SL-0376	Host outer membrane	membrane	yes
+SL-0411	Host outer mitochondrial membrane	membrane	yes
+SL-0446	Host outer nuclear membrane	membrane	yes
+SL-0507	Host pathogen-containing vacuole	other	yes
+SL-0508	Host pathogen-containing vacuole lumen	other	yes
+SL-0509	Host pathogen-containing vacuole membrane	membrane	yes
+SL-0415	Host perinuclear envelope	other	yes
+SL-0382	Host perinuclear region	other	yes
+SL-0382	Host perinuclear region of cytoplasm	other	yes
+SL-0420	Host periplasm	other	no
+SL-0420	Host periplasmic space	other	yes
+SL-0475	Host peroxisome	other	no
+SL-0432	Host phagocytic vesicle	other	yes
+SL-0433	Host phagocytic vesicle membrane	membrane	yes
+SL-0433	Host phagosomal membrane	membrane	yes
+SL-0432	Host phagosome	other	yes
+SL-0433	Host phagosome membrane	membrane	yes
+SL-0375	Host plasma membrane	membrane	yes
+SL-0375	Host plasmalemma	membrane	yes
+SL-0428	Host plasmalemmal vesicle	membrane	yes
+SL-0385	Host plasmodesma	other	yes
+SL-0385	Host plasmodesmata	other	yes
+SL-0434	Host presynaptic cell membrane	membrane	yes
+SL-0434	Host presynaptic membrane	membrane	yes
+SL-0422	Host rough ER	other	yes
+SL-0422	Host rough endoplasmic reticulum	other	no
+SL-0423	Host rough endoplasmic reticulum membrane	membrane	no
+SL-0504	Host secretory vesicle	other	yes
+SL-0502	Host secretory vesicle, host synaptic vesicle	other	yes
+SL-0444	Host smooth ER	other	yes
+SL-0444	Host smooth endoplasmic reticulum	other	no
+SL-0445	Host smooth endoplasmic reticulum membrane	membrane	no
+SL-0401	Host spherosome	other	yes
+SL-0435	Host synapse	other	no
+SL-0434	Host synapse, host presynaptic cell membrane	membrane	yes
+SL-0502	Host synaptic vesicle	other	yes
+SL-0503	Host synaptic vesicle membrane	other	yes
+SL-0503	Host synaptic vesicular membrane	other	yes
+SL-0449	Host thylakoid	other	no
+SL-0463	Host trans-Golgi	other	yes
+SL-0463	Host trans-Golgi complex	other	yes
+SL-0464	Host trans-Golgi complex membrane	membrane	yes
+SL-0464	Host trans-Golgi membrane	membrane	yes
+SL-0463	Host trans-Golgi network	other	yes
+SL-0464	Host trans-Golgi network membrane	membrane	yes
+SL-0506	Host vacuole	other	no
+SL-0507	Host vacuole, host pathogen-containing vacuole	other	yes
+SL-0508	Host vacuole, host pathogen-containing vacuole, host pathogen-containing vacuole lumen	other	yes
+SL-0509	Host vacuole, host pathogen-containing vacuole, host pathogen-containing vacuole membrane	membrane	yes
+SL-0391	Host vesiculo-tubular cluster	other	yes
+SL-0392	Host vesiculo-tubular cluster membrane	membrane	yes
+SL-0143	Hyaline layer	secreted	yes
+SL-0335	Hydrogenosomal lumen	other	yes
+SL-0144	Hydrogenosomal membrane	membrane	yes
+SL-0145	Hydrogenosome	other	no
+SL-0335	Hydrogenosome lumen	other	no
+SL-0144	Hydrogenosome membrane	membrane	no
+SL-0478	I band	cytoplasm	no
+SL-0478	I disc	cytoplasm	yes
+SL-0478	I disk	cytoplasm	yes
+SL-0478	I-band	cytoplasm	yes
+SL-0004	IAM	membrane	yes
+SL-0098	IC	other	yes
+SL-0326	IC lumen	other	yes
+SL-0099	IC membrane	membrane	yes
+SL-0186	IGC	nucleus	yes
+SL-0362	IMC	membrane	yes
+SL-0146	IPM	secreted	yes
+SL-0488	Inflammasome	cytoplasm	no
+SL-0004	Inner acrosomal membrane	membrane	yes
+SL-0013	Inner amyloplastic membrane	membrane	yes
+SL-0037	Inner membrane	membrane	yes
+SL-0362	Inner membrane complex	membrane	no
+SL-0168	Inner mitochondrial membrane	membrane;mitochondrion	yes
+SL-0439	Inner mitosomal membrane	membrane	yes
+SL-0179	Inner nuclear membrane	membrane;nucleus	yes
+SL-0211	Inner plastid membrane	membrane	yes
+SL-0211	Inner plastidic membrane	membrane	yes
+SL-0112	Intercellular space	secreted	yes
+SL-0186	Interchromatin granules clusters	nucleus	yes
+SL-0098	Intermediate compartment	other	yes
+SL-0326	Intermediate compartment lumen	other	yes
+SL-0099	Intermediate compartment membrane	membrane	yes
+SL-9912	Intermembrane side	other	no
+SL-0146	Interphotoreceptor matrix	secreted	yes
+SL-9919	Intravirionic side	other	no
+SL-0148	Invadopodia	other	yes
+SL-0148	Invadopodium	other	yes
+SL-0290	Invadopodium membrane	membrane	yes
+SL-0190	Karyolymph	nucleus	yes
+SL-0190	Karyoplasm	nucleus	yes
+SL-0178	Karyotheca	nucleus	yes
+SL-0149	Kinetochore	other	yes
+SL-0150	Kinetoplast	mitochondrion	yes
+SL-0460	Kinocilia	other	yes
+SL-0460	Kinocilium	other	yes
+SL-0465	Kremer body	nucleus	yes
+SL-0291	Lamellipodia	other	yes
+SL-0291	Lamellipodium	other	yes
+SL-0292	Lamellipodium membrane	membrane	yes
+SL-0526	Large dense-core vesicles	other	yes
+SL-0336	Late endosomal lumen	other	yes
+SL-0151	Late endosomal membrane	membrane	yes
+SL-0152	Late endosome	other	no
+SL-0336	Late endosome lumen	other	no
+SL-0151	Late endosome membrane	membrane	no
+SL-0153	Lateral cell membrane	membrane	no
+SL-0153	Lateral plasma membrane	membrane	yes
+SL-0154	Lipid bodies	other	yes
+SL-0154	Lipid body	other	yes
+SL-0154	Lipid droplet	other	no
+SL-0370	Lipid microdomain	membrane	yes
+SL-0154	Lipid particle	other	yes
+SL-0370	Lipid raft	membrane	yes
+SL-9901	Lipid-anchor	other	no
+SL-9902	Lipid-anchor, GPI-anchor	other	yes
+SL-9920	Lipid-anchor, GPI-like-anchor	other	yes
+SL-9914	Lumenal side	other	no
+SL-0156	Lysosomal lumen	other	yes
+SL-0157	Lysosomal membrane	membrane	yes
+SL-0158	Lysosome	other	no
+SL-0156	Lysosome lumen	other	no
+SL-0157	Lysosome membrane	membrane	no
+SL-0543	Lytic granule, cytotoxic granule	other	yes
+SL-0159	Lytic vacuole	other	no
+SL-0315	M band	cytoplasm	yes
+SL-0315	M line	cytoplasm	no
+SL-0315	M-band	cytoplasm	yes
+SL-0315	M-line	cytoplasm	yes
+SL-0484	MTOC	cytoplasm	yes
+SL-0174	MVB	other	yes
+SL-0340	MVB lumen	other	yes
+SL-0175	MVB membrane	membrane	yes
+SL-0092	Macula adherens	other	yes
+SL-0510	Magnetosome	other	no
+SL-0511	Magnetosome lumen	other	no
+SL-0512	Magnetosome membrane	membrane	no
+SL-0511	Magnetosome, Magnetosome lumen	other	yes
+SL-0485	Massule	cytoplasm	yes
+SL-9913	Matrix side	other	no
+SL-0539	Megaspore	other	yes
+SL-0251	Meiotic spindle	cytoplasm	yes
+SL-0338	Melanosomal lumen	other	yes
+SL-0160	Melanosomal membrane	membrane	yes
+SL-0161	Melanosome	other	no
+SL-0338	Melanosome lumen	other	no
+SL-0160	Melanosome membrane	membrane	no
+SL-0162	Membrane	membrane	no
+SL-0035	Membrane microdomain	membrane	yes
+SL-0370	Membrane raft	membrane	no
+SL-0489	Membrane vesicle	other	yes
+SL-0035	Membrane, caveola	membrane	yes
+SL-0069	Membrane, clathrin-coated pit	membrane	yes
+SL-0072	Membrane, coated pit	membrane	yes
+SL-0544	Metabolosome	other	yes
+SL-0339	Micronemal lumen	other	yes
+SL-0164	Micronemal membrane	membrane	yes
+SL-0163	Microneme	other	yes
+SL-0339	Microneme lumen	other	yes
+SL-0164	Microneme membrane	membrane	yes
+SL-0499	Microparticle	other	yes
+SL-0165	Microsomal membrane	membrane	yes
+SL-0166	Microsome	other	no
+SL-0165	Microsome membrane	membrane	no
+SL-0286	Microspike	other	yes
+SL-0287	Microspike membrane	membrane	yes
+SL-0470	Microspike tip	other	yes
+SL-0539	Microspore	other	yes
+SL-0484	Microtubule organizing center	cytoplasm	yes
+SL-0489	Microvesicle	other	yes
+SL-0294	Microvillar membrane	membrane	yes
+SL-0293	Microvilli	other	yes
+SL-0293	Microvillus	other	yes
+SL-0294	Microvillus membrane	membrane	yes
+SL-0469	Midbody	other	no
+SL-0469	Midbody derivative	other	yes
+SL-0469	Midbody remnant	other	yes
+SL-0490	Midbody ring	other	no
+SL-0490	Midbody, Midbody ring	other	yes
+SL-0521	Mini Golgi	other	yes
+SL-0167	Mitochondrial envelope	mitochondrion	yes
+SL-0168	Mitochondrial inner membrane	membrane;mitochondrion	yes
+SL-0169	Mitochondrial intermembrane space	mitochondrion	yes
+SL-0170	Mitochondrial matrix	mitochondrion	yes
+SL-0171	Mitochondrial membrane	membrane;mitochondrion	yes
+SL-0269	Mitochondrial nucleoid	mitochondrion	yes
+SL-0172	Mitochondrial outer membrane	membrane;mitochondrion	yes
+SL-0169	Mitochondrial periplasm	mitochondrion	yes
+SL-0169	Mitochondrial periplasmic space	mitochondrion	yes
+SL-0173	Mitochondrion	mitochondrion	no
+SL-0167	Mitochondrion envelope	mitochondrion	no
+SL-0168	Mitochondrion inner membrane	membrane;mitochondrion	no
+SL-0169	Mitochondrion intermembrane space	mitochondrion	no
+SL-0170	Mitochondrion matrix	mitochondrion	no
+SL-0150	Mitochondrion matrix, kinetoplast	mitochondrion	yes
+SL-0269	Mitochondrion matrix, mitochondrion nucleoid	mitochondrion	yes
+SL-0171	Mitochondrion membrane	membrane;mitochondrion	no
+SL-0269	Mitochondrion nucleoid	mitochondrion	yes
+SL-0172	Mitochondrion outer membrane	membrane;mitochondrion	no
+SL-0269	Mitochromosome	mitochondrion	yes
+SL-0438	Mitosomal envelope	other	yes
+SL-0439	Mitosomal inner membrane	membrane	yes
+SL-0440	Mitosomal intermembrane space	other	yes
+SL-0441	Mitosomal matrix	other	yes
+SL-0442	Mitosomal membrane	membrane	yes
+SL-0443	Mitosomal outer membrane	membrane	yes
+SL-0440	Mitosomal periplasm	other	yes
+SL-0440	Mitosomal periplasmic space	other	yes
+SL-0437	Mitosome	other	no
+SL-0438	Mitosome envelope	other	no
+SL-0439	Mitosome inner membrane	membrane	no
+SL-0440	Mitosome intermembrane space	other	no
+SL-0441	Mitosome matrix	other	no
+SL-0442	Mitosome membrane	membrane	no
+SL-0443	Mitosome outer membrane	membrane	no
+SL-0251	Mitotic apparatus	cytoplasm	yes
+SL-0251	Mitotic spindle	cytoplasm	yes
+SL-0154	Monolayer-surrounded lipid storage body	other	yes
+SL-0117	Motile cilia	other	yes
+SL-0117	Motile cilium	other	yes
+SL-9909	Multi pass	membrane	yes
+SL-9909	Multi span	membrane	yes
+SL-9909	Multi-pass	membrane	yes
+SL-9909	Multi-pass membrane protein	membrane	no
+SL-9909	Multipass	membrane	yes
+SL-9909	Multispan	membrane	yes
+SL-0174	Multivesicular bodies	other	yes
+SL-0340	Multivesicular bodies lumen	other	yes
+SL-0175	Multivesicular bodies membrane	membrane	yes
+SL-0174	Multivesicular body	other	yes
+SL-0340	Multivesicular body lumen	other	yes
+SL-0175	Multivesicular body membrane	membrane	yes
+SL-0082	Muroplast	other	yes
+SL-0176	Myelin	membrane	yes
+SL-0176	Myelin membrane	membrane	no
+SL-0176	Myelin sheath	membrane	yes
+SL-0312	Myofibril	cytoplasm	yes
+SL-0238	Myolemma	membrane	yes
+SL-0465	ND10	nucleus	yes
+SL-0185	NPC	nucleus	yes
+SL-0177	Nematocyst	other	no
+SL-0518	Neurite	other	yes
+SL-0518	Neuron projection	other	yes
+SL-0526	Neuronal dense core granule	other	yes
+SL-0526	Neuronal dense core vesicle	other	yes
+SL-0532	Neuronal dense core vesicle membrane	membrane	yes
+SL-0526	Neuronal large dense-core vesicles	other	yes
+SL-0518	Neuronal process	other	yes
+SL-0191	Nuclear	nucleus	yes
+SL-0494	Nuclear body	nucleus	yes
+SL-0465	Nuclear domains-10	nucleus	yes
+SL-0178	Nuclear envelope	nucleus	yes
+SL-0184	Nuclear envelope lumen	nucleus	yes
+SL-0179	Nuclear inner membrane	membrane;nucleus	yes
+SL-0184	Nuclear intermembrane space	nucleus	yes
+SL-0180	Nuclear lamina	nucleus	yes
+SL-0181	Nuclear matrix	nucleus	yes
+SL-0182	Nuclear membrane	membrane;nucleus	yes
+SL-0183	Nuclear outer membrane	membrane;nucleus	yes
+SL-0198	Nuclear periphery	cytoplasm	yes
+SL-0184	Nuclear periplasm	nucleus	yes
+SL-0184	Nuclear periplasmic space	nucleus	yes
+SL-0185	Nuclear pore	nucleus	yes
+SL-0185	Nuclear pore complex	nucleus	yes
+SL-0181	Nuclear scaffold	nucleus	yes
+SL-0181	Nuclear skeleton	nucleus	yes
+SL-0186	Nuclear speck	nucleus	yes
+SL-0186	Nuclear speckle	nucleus	yes
+SL-0191	Nuclei	nucleus	yes
+SL-0187	Nucleoid	cytoplasm	yes
+SL-0031	Nucleolar accessory bodies	nucleus	yes
+SL-0178	Nucleolemma	nucleus	yes
+SL-0188	Nucleoli	nucleus	yes
+SL-0497	Nucleoli fibrillar center	nucleus	yes
+SL-0188	Nucleolus	nucleus	yes
+SL-0497	Nucleolus fibrillar center	nucleus	yes
+SL-0189	Nucleomorph	other	no
+SL-0190	Nucleoplasm	nucleus	yes
+SL-9915	Nucleoplasmic side	other	no
+SL-0191	Nucleus	nucleus	no
+SL-0178	Nucleus envelope	nucleus	no
+SL-0184	Nucleus envelope lumen	nucleus	yes
+SL-0179	Nucleus inner membrane	membrane;nucleus	no
+SL-0184	Nucleus intermembrane space	nucleus	no
+SL-0180	Nucleus lamina	nucleus	no
+SL-0181	Nucleus matrix	nucleus	no
+SL-0182	Nucleus membrane	membrane;nucleus	no
+SL-0183	Nucleus outer membrane	membrane;nucleus	no
+SL-0186	Nucleus speckle	nucleus	no
+SL-0031	Nucleus, Cajal body	nucleus	yes
+SL-0465	Nucleus, PML body	nucleus	yes
+SL-0127	Nucleus, gem	nucleus	yes
+SL-0494	Nucleus, nuclear body	nucleus	yes
+SL-0185	Nucleus, nuclear pore complex	nucleus	yes
+SL-0188	Nucleus, nucleolus	nucleus	yes
+SL-0497	Nucleus, nucleolus fibrillar center	nucleus	yes
+SL-0190	Nucleus, nucleoplasm	nucleus	yes
+SL-0154	Oil bodies	other	yes
+SL-0154	Oil body	other	yes
+SL-0154	Oleosome	other	yes
+SL-0351	Organellar chromatophore	other	yes
+SL-0359	Organellar chromatophore inner membrane	membrane	yes
+SL-0360	Organellar chromatophore intermembrane space	other	yes
+SL-0352	Organellar chromatophore membrane	membrane	yes
+SL-0361	Organellar chromatophore outer membrane	membrane	yes
+SL-0353	Organellar chromatophore plasma	other	yes
+SL-0353	Organellar chromatophore stroma	other	yes
+SL-0354	Organellar chromatophore thylakoid	other	yes
+SL-0355	Organellar chromatophore thylakoid lumen	other	yes
+SL-0356	Organellar chromatophore thylakoid membrane	membrane	yes
+SL-0447	Outer acrosomal membrane	membrane	yes
+SL-0040	Outer membrane	membrane	yes
+SL-0172	Outer mitochondrial membrane	membrane;mitochondrion	yes
+SL-0443	Outer mitosomal membrane	membrane	yes
+SL-0183	Outer nuclear membrane	membrane;nucleus	yes
+SL-0214	Outer plastid membrane	membrane	yes
+SL-0214	Outer plastidic membrane	membrane	yes
+SL-0230	P bodies	cytoplasm	yes
+SL-0230	P body	cytoplasm	yes
+SL-0230	P-bodies	cytoplasm	yes
+SL-0230	P-body	cytoplasm	no
+SL-0220	PAS	other	yes
+SL-0221	PAS membrane	membrane	yes
+SL-0230	PB	cytoplasm	yes
+SL-0208	PD	other	yes
+SL-0465	PML body	nucleus	no
+SL-0465	PML oncogenic domain	nucleus	yes
+SL-0465	PML-NB	nucleus	yes
+SL-0465	PML-nuclear body	nucleus	yes
+SL-0297	PSD	other	yes
+SL-0192	PSJ	other	yes
+SL-0228	PSV	other	yes
+SL-0223	PVC	other	yes
+SL-0343	PVC lumen	other	yes
+SL-0224	PVC membrane	membrane	yes
+SL-0246	Paired septate junction	other	yes
+SL-0192	Paranodal junction	other	yes
+SL-0192	Paranodal septate junction	other	yes
+SL-0341	Parasitophorous vacuolar lumen	other	yes
+SL-0193	Parasitophorous vacuolar membrane	membrane	yes
+SL-0194	Parasitophorous vacuole	other	no
+SL-0341	Parasitophorous vacuole lumen	other	no
+SL-0193	Parasitophorous vacuole membrane	membrane	no
+SL-0507	Pathogen inclusion	other	yes
+SL-0508	Pathogen inclusion lumen	other	yes
+SL-0509	Pathogen inclusion membrane	membrane	yes
+SL-0540	Pellucid zone	secreted	yes
+SL-9900	Peptidoglycan-anchor	other	no
+SL-0529	Peri-active zone	other	yes
+SL-0529	Periactive zone	other	yes
+SL-0195	Peribacteroid membrane	membrane	yes
+SL-0196	Peribacteroid space	other	yes
+SL-0197	Perikarya	other	yes
+SL-0197	Perikaryon	other	no
+SL-0367	Perine	other	yes
+SL-0178	Perinuclear envelope	nucleus	yes
+SL-0198	Perinuclear region	cytoplasm	yes
+SL-0198	Perinuclear region of cytoplasm	cytoplasm	yes
+SL-0184	Perinuclear space	nucleus	yes
+SL-0199	Perinuclear theca	cytoplasm	yes
+SL-9903	Peripheral membrane protein	membrane	no
+SL-0200	Periplasm	other	no
+SL-0201	Periplasmic fibril	other	yes
+SL-0201	Periplasmic flagellum	other	no
+SL-9916	Periplasmic side	other	no
+SL-0200	Periplasmic space	other	yes
+SL-0367	Perispore	other	yes
+SL-0202	Peroxisomal matrix	other	yes
+SL-0203	Peroxisomal membrane	membrane	yes
+SL-0204	Peroxisome	other	no
+SL-0202	Peroxisome matrix	other	no
+SL-0203	Peroxisome membrane	membrane	no
+SL-0473	Phagocytic cup	other	yes
+SL-0206	Phagocytic vesicle	other	yes
+SL-0342	Phagocytic vesicle lumen	other	yes
+SL-0205	Phagocytic vesicle membrane	membrane	yes
+SL-0220	Phagophore assembly site	other	yes
+SL-0342	Phagosomal lumen	other	yes
+SL-0205	Phagosomal membrane	membrane	yes
+SL-0206	Phagosome	other	yes
+SL-0342	Phagosome lumen	other	yes
+SL-0205	Phagosome membrane	membrane	yes
+SL-0457	Photoreceptor inner segment	other	no
+SL-0514	Photoreceptor inner segment membrane	membrane	no
+SL-0458	Photoreceptor outer segment	other	yes
+SL-0513	Photoreceptor outer segment membrane	membrane	no
+SL-0207	Phragmoplast	cytoplasm	yes
+SL-0113	Pili	other	yes
+SL-0113	Pilus	other	yes
+SL-0037	Plasma membrane	membrane	yes
+SL-0039	Plasmalemma	membrane	yes
+SL-0035	Plasmalemmal vesicle	membrane	yes
+SL-0208	Plasmodesma	other	yes
+SL-0208	Plasmodesmata	other	yes
+SL-0209	Plastid	other	no
+SL-0210	Plastid envelope	other	no
+SL-0211	Plastid inner membrane	membrane	no
+SL-0212	Plastid intermembrane space	other	no
+SL-0213	Plastid membrane	membrane	no
+SL-0140	Plastid nucleoid	other	yes
+SL-0214	Plastid outer membrane	membrane	no
+SL-0215	Plastid stroma	other	no
+SL-0140	Plastid stroma, plastid nucleoid	other	yes
+SL-0278	Plastid thylakoid	other	no
+SL-0309	Plastid thylakoid lumen	other	no
+SL-0216	Plastid thylakoid membrane	membrane	no
+SL-0309	Plastid thylakoidal lumen	other	yes
+SL-0216	Plastid thylakoidal membrane	membrane	yes
+SL-0012	Plastid, amyloplast	other	yes
+SL-0013	Plastid, amyloplast inner membrane	membrane	yes
+SL-0014	Plastid, amyloplast membrane	membrane	yes
+SL-0018	Plastid, apicoplast	other	yes
+SL-0554	Plastid, apicoplast, Apicoplast membrane	membrane	yes
+SL-0049	Plastid, chloroplast	other	yes
+SL-0050	Plastid, chloroplast envelope	other	yes
+SL-0051	Plastid, chloroplast inner membrane	membrane	yes
+SL-0052	Plastid, chloroplast intermembrane space	other	yes
+SL-0053	Plastid, chloroplast membrane	membrane	yes
+SL-0054	Plastid, chloroplast outer membrane	membrane	yes
+SL-0055	Plastid, chloroplast stroma	other	yes
+SL-0139	Plastid, chloroplast stroma, chloroplast nucleoid	other	yes
+SL-0056	Plastid, chloroplast thylakoid	other	yes
+SL-0057	Plastid, chloroplast thylakoid lumen	other	yes
+SL-0058	Plastid, chloroplast thylakoid membrane	membrane	yes
+SL-0217	Plastid, chloroplast, plastoglobule	other	yes
+SL-0063	Plastid, chromoplast	other	yes
+SL-0064	Plastid, chromoplast membrane	membrane	yes
+SL-0065	Plastid, chromoplast stroma	other	yes
+SL-0082	Plastid, cyanelle	other	yes
+SL-0479	Plastid, cyanelle envelope	other	yes
+SL-0480	Plastid, cyanelle inner membrane	membrane	yes
+SL-0481	Plastid, cyanelle intermembrane space	other	yes
+SL-0083	Plastid, cyanelle membrane	membrane	yes
+SL-0482	Plastid, cyanelle outer membrane	membrane	yes
+SL-0350	Plastid, cyanelle stroma	other	yes
+SL-0277	Plastid, cyanelle thylakoid	other	yes
+SL-0084	Plastid, cyanelle thylakoid lumen	other	yes
+SL-0085	Plastid, cyanelle thylakoid membrane	membrane	yes
+SL-0110	Plastid, etioplast	other	yes
+SL-0329	Plastid, etioplast membrane	membrane	yes
+SL-0330	Plastid, etioplast stroma	other	yes
+SL-0226	Plastid, etioplast, prolamellar body	other	yes
+SL-0351	Plastid, organellar chromatophore	other	yes
+SL-0359	Plastid, organellar chromatophore inner membrane	membrane	yes
+SL-0360	Plastid, organellar chromatophore intermembrane space	other	yes
+SL-0352	Plastid, organellar chromatophore membrane	membrane	yes
+SL-0361	Plastid, organellar chromatophore outer membrane	membrane	yes
+SL-0353	Plastid, organellar chromatophore stroma	other	yes
+SL-0354	Plastid, organellar chromatophore thylakoid	other	yes
+SL-0355	Plastid, organellar chromatophore thylakoid lumen	other	yes
+SL-0356	Plastid, organellar chromatophore thylakoid membrane	membrane	yes
+SL-0210	Plastidic envelope	other	yes
+SL-0211	Plastidic inner membrane	membrane	yes
+SL-0212	Plastidic intermembrane space	other	yes
+SL-0213	Plastidic membrane	membrane	yes
+SL-0140	Plastidic nucleoid	other	yes
+SL-0214	Plastidic outer membrane	membrane	yes
+SL-0215	Plastidic stroma	other	yes
+SL-0278	Plastidic thylakoid	other	yes
+SL-0217	Plastoglobule	other	yes
+SL-0246	Pleated septate junction	other	yes
+SL-0296	Podosomal membrane	membrane	yes
+SL-0295	Podosome	other	yes
+SL-0296	Podosome membrane	membrane	yes
+SL-0371	Pollen coat	secreted	yes
+SL-0371	Pollenkitt	secreted	yes
+SL-0544	Polyhedral organelle	other	yes
+SL-9909	Polytopic membrane protein	membrane	yes
+SL-0218	Porosome	membrane	yes
+SL-0515	Post-synapse	other	yes
+SL-0515	Postsynapse	other	no
+SL-0521	Postsynaptic Golgi apparatus	other	yes
+SL-0219	Postsynaptic cell membrane	membrane	no
+SL-0284	Postsynaptic dendritic spine	other	yes
+SL-0297	Postsynaptic density	other	no
+SL-0520	Postsynaptic density membrane	membrane	no
+SL-0523	Postsynaptic early endosome	other	no
+SL-0534	Postsynaptic early endosome membrane	membrane	no
+SL-0528	Postsynaptic endocytic zone	other	no
+SL-0522	Postsynaptic endosome	other	no
+SL-0219	Postsynaptic membrane	membrane	yes
+SL-0524	Postsynaptic recycling endosome	other	no
+SL-0533	Postsynaptic recycling endosome membrane	membrane	no
+SL-0515	Postsynaptic region	other	yes
+SL-0297	Postsynaptic specialization	other	yes
+SL-0515	Postsynaptic terminal	other	yes
+SL-0220	Pre-autophagosomal structure	other	yes
+SL-0221	Pre-autophagosomal structure membrane	membrane	yes
+SL-0516	Pre-synapse	other	yes
+SL-0220	Preautophagosomal structure	other	no
+SL-0221	Preautophagosomal structure membrane	membrane	no
+SL-0119	Prespore	other	yes
+SL-0120	Prespore inner membrane	membrane	yes
+SL-0121	Prespore intermembrane space	other	yes
+SL-0122	Prespore membrane	membrane	yes
+SL-0123	Prespore outer membrane	membrane	yes
+SL-0516	Presynapse	other	no
+SL-0519	Presynaptic active zone	other	no
+SL-0527	Presynaptic active zone membrane	membrane	no
+SL-0516	Presynaptic bouton	other	yes
+SL-0222	Presynaptic cell membrane	membrane	no
+SL-0529	Presynaptic endocytic zone	other	no
+SL-0525	Presynaptic endosome	other	no
+SL-0222	Presynaptic membrane	membrane	yes
+SL-0516	Presynaptic region	other	yes
+SL-0516	Presynaptic terminal	other	yes
+SL-0223	Prevacuolar compartment	other	no
+SL-0343	Prevacuolar compartment lumen	other	no
+SL-0224	Prevacuolar compartment membrane	membrane	no
+SL-0225	Primary cell wall	secreted	yes
+SL-0230	Processing bodies	cytoplasm	yes
+SL-0230	Processing body	cytoplasm	yes
+SL-0226	Prolamellar body	other	yes
+SL-0465	Promyelocytic leukaemia nuclear body	nucleus	yes
+SL-0465	Promyelocytic leukemia nuclear body	nucleus	yes
+SL-0369	Prospore	other	no
+SL-0368	Prospore membrane	membrane	no
+SL-0010	Protein body	other	yes
+SL-0317	Protein body lumen	other	yes
+SL-0011	Protein body membrane	membrane	yes
+SL-0344	Protein storage vacuolar lumen	other	yes
+SL-0227	Protein storage vacuolar membrane	membrane	yes
+SL-0228	Protein storage vacuole	other	no
+SL-0344	Protein storage vacuole lumen	other	no
+SL-0227	Protein storage vacuole membrane	membrane	no
+SL-0111	Proteinaceous extracellular matrix	secreted	yes
+SL-0229	Protoplasm	other	no
+SL-0298	Pseudopod	other	yes
+SL-0298	Pseudopodia	other	yes
+SL-0298	Pseudopodium	other	yes
+SL-0299	Pseudopodium membrane	membrane	yes
+SL-0471	Pseudopodium tip	other	yes
+SL-0235	RER	other	yes
+SL-0345	Recycling endosomal lumen	other	yes
+SL-0231	Recycling endosomal membrane	membrane	yes
+SL-0232	Recycling endosome	other	no
+SL-0345	Recycling endosome lumen	other	no
+SL-0231	Recycling endosome membrane	membrane	no
+SL-0551	Rhabdomere	other	yes
+SL-0552	Rhabdomere membrane	membrane	yes
+SL-0233	Rhoptries	other	yes
+SL-0233	Rhoptry	other	yes
+SL-0346	Rhoptry lumen	other	yes
+SL-0234	Rhoptry membrane	membrane	yes
+SL-0235	Rough ER	other	yes
+SL-0235	Rough endoplasmic reticulum	other	no
+SL-0236	Rough endoplasmic reticulum lumen	other	no
+SL-0237	Rough endoplasmic reticulum membrane	membrane	no
+SL-0300	Ruffle	other	yes
+SL-0301	Ruffle membrane	membrane	yes
+SL-0262	S-layer	secreted	no
+SL-0248	SER	other	yes
+SL-0186	SF compartments	nucleus	yes
+SL-0246	SJ	other	yes
+SL-0252	SPB	cytoplasm	yes
+SL-0238	Sarcolemma	membrane	yes
+SL-0313	Sarcomere	cytoplasm	yes
+SL-0311	Sarcoplasm	cytoplasm	yes
+SL-0239	Sarcoplasmic reticulum	other	no
+SL-0240	Sarcoplasmic reticulum lumen	other	no
+SL-0241	Sarcoplasmic reticulum membrane	membrane	no
+SL-0521	Satellite Golgi	other	yes
+SL-0242	Secondary cell wall	secreted	yes
+SL-0243	Secreted	secreted	no
+SL-0033	Secreted, capsule	secreted	yes
+SL-0041	Secreted, cell wall	secreted	yes
+SL-0262	Secreted, cell wall, S-layer	secreted	yes
+SL-0466	Secreted, extracellular exosome	secreted	yes
+SL-0112	Secreted, extracellular space	secreted	yes
+SL-0019	Secreted, extracellular space, apoplast	secreted	yes
+SL-0111	Secreted, extracellular space, extracellular matrix	secreted	yes
+SL-0016	Secreted, extracellular space, extracellular matrix, apical lamina	secreted	yes
+SL-0025	Secreted, extracellular space, extracellular matrix, basement membrane	secreted	yes
+SL-0143	Secreted, extracellular space, extracellular matrix, hyaline layer	secreted	yes
+SL-0146	Secreted, extracellular space, extracellular matrix, interphotoreceptor matrix	secreted	yes
+SL-0371	Secreted, extracellular space, extracellular matrix, pollen coat	secreted	yes
+SL-0255	Secreted, extracellular space, surface film	secreted	yes
+SL-0225	Secreted, primary cell wall	secreted	yes
+SL-0242	Secreted, secondary cell wall	secreted	yes
+SL-0247	Secreted, slime layer	secreted	yes
+SL-0244	Secretory granule	other	yes
+SL-0347	Secretory granule lumen	other	yes
+SL-0245	Secretory granule membrane	membrane	yes
+SL-0244	Secretory vesicle	other	yes
+SL-0347	Secretory vesicle lumen	other	yes
+SL-0245	Secretory vesicle membrane	membrane	yes
+SL-0246	Septate junction	other	yes
+SL-9904	Single pass	membrane	yes
+SL-9904	Single span	membrane	yes
+SL-9904	Single-pass	membrane	yes
+SL-9904	Single-pass membrane protein	membrane	no
+SL-9905	Single-pass type I membrane protein	membrane	no
+SL-9906	Single-pass type II membrane protein	membrane	no
+SL-9907	Single-pass type III membrane protein	membrane	no
+SL-9908	Single-pass type IV membrane protein	membrane	no
+SL-9904	Singlepass	membrane	yes
+SL-9904	Singlespan	membrane	yes
+SL-0247	Slime layer	secreted	yes
+SL-0248	Smooth ER	other	yes
+SL-0248	Smooth endoplasmic reticulum	other	no
+SL-0249	Smooth endoplasmic reticulum lumen	other	no
+SL-0250	Smooth endoplasmic reticulum membrane	membrane	no
+SL-0031	Sphere organelles	nucleus	yes
+SL-0154	Spherosome	other	yes
+SL-0251	Spindle	cytoplasm	yes
+SL-0252	Spindle polar body	cytoplasm	yes
+SL-0448	Spindle pole	cytoplasm	yes
+SL-0252	Spindle pole body	cytoplasm	yes
+SL-0284	Spine	other	yes
+SL-0530	Spine apparatus	other	yes
+SL-0186	Splicing Factor compartments	nucleus	yes
+SL-0186	Splicing speckle	nucleus	yes
+SL-0539	Spore	other	no
+SL-0366	Spore coat	other	no
+SL-0253	Spore core	other	no
+SL-0364	Spore cortex	other	no
+SL-0363	Spore inner membrane	membrane	yes
+SL-0363	Spore membrane	membrane	no
+SL-0365	Spore outer membrane	membrane	no
+SL-0436	Spore polar tube	other	no
+SL-0254	Spore wall	other	no
+SL-0367	Spore, perispore	other	yes
+SL-0490	Stembody	other	yes
+SL-0302	Stereocilia	other	yes
+SL-0303	Stereocilia membrane	membrane	yes
+SL-0302	Stereocilium	other	yes
+SL-0303	Stereocilium membrane	membrane	yes
+SL-0228	Storage vacuole	other	yes
+SL-0501	Stress fiber	cytoplasm	yes
+SL-0496	Stress granule	cytoplasm	no
+SL-9917	Stromal side	other	no
+SL-0255	Surface film	secreted	yes
+SL-0256	Symbiosome	other	no
+SL-0195	Symbiosome, peribacteroid membrane	membrane	yes
+SL-0196	Symbiosome, peribacteroid space	other	yes
+SL-0257	Symplast	other	no
+SL-0258	Synapse	other	no
+SL-0261	Synapse, synaptosome	other	yes
+SL-0531	Synaptic cell membrane	membrane	no
+SL-0517	Synaptic cleft	secreted	no
+SL-0259	Synaptic vesicle	other	yes
+SL-0348	Synaptic vesicle lumen	other	yes
+SL-0260	Synaptic vesicle membrane	membrane	yes
+SL-0348	Synaptic vesicular lumen	other	yes
+SL-0260	Synaptic vesicular membrane	membrane	yes
+SL-0261	Synaptosome	other	yes
+SL-0505	T-tubule	membrane	no
+SL-0266	TGN	other	yes
+SL-0267	TGN membrane	membrane	yes
+SL-0265	TJ	other	yes
+SL-0487	Target cell	other	no
+SL-0486	Target cell cytoplasm	other	yes
+SL-0451	Target cell membrane	membrane	no
+SL-0452	Target cell, Membrane, target membrane	membrane	yes
+SL-0486	Target cell, target cell cytoplasm	other	yes
+SL-0486	Target cytoplasm	other	yes
+SL-0451	Target cytoplasmic membrane	membrane	yes
+SL-0452	Target membrane	membrane	yes
+SL-0451	Target plasma membrane	membrane	yes
+SL-0451	Target plasmalemma	membrane	yes
+SL-0263	Tegument	other	no
+SL-0264	Tegument membrane	membrane	no
+SL-0264	Tegumental membrane	membrane	yes
+SL-0539	Teliospore	other	yes
+SL-0276	Telomere	other	yes
+SL-0020	Terminal organelle	other	yes
+SL-0021	Terminal organelle membrane	membrane	yes
+SL-0539	Tetraspore	other	yes
+SL-0018	Thick-walled organelle	other	yes
+SL-0450	Thylakoid	other	no
+SL-0265	Tight junction	other	yes
+SL-0505	Transverse tubule	membrane	yes
+SL-0505	Transverse-axial tubular system	membrane	yes
+SL-0268	Trichocyst	other	no
+SL-0553	U bodies	cytoplasm	yes
+SL-0553	U body	cytoplasm	yes
+SL-0553	U-bodies	cytoplasm	yes
+SL-0553	U-body	cytoplasm	no
+SL-0117	Undulipodia	other	yes
+SL-0117	Undulipodium	other	yes
+SL-0141	Uropod	other	yes
+SL-0141	Uropodia	other	yes
+SL-0141	Uropodium	other	yes
+SL-0098	VTC	other	yes
+SL-0326	VTC lumen	other	yes
+SL-0099	VTC membrane	membrane	yes
+SL-0270	Vacuolar lumen	other	yes
+SL-0271	Vacuolar membrane	membrane	yes
+SL-0272	Vacuole	other	no
+SL-0270	Vacuole lumen	other	no
+SL-0271	Vacuole membrane	membrane	no
+SL-0010	Vacuole, aleurone grain	other	yes
+SL-0317	Vacuole, aleurone grain lumen	other	yes
+SL-0011	Vacuole, aleurone grain membrane	membrane	yes
+SL-0291	Veil	other	yes
+SL-0498	Vesicle	other	no
+SL-0098	Vesiculo-tubular cluster	other	yes
+SL-0326	Vesiculo-tubular cluster lumen	other	yes
+SL-0099	Vesiculo-tubular cluster membrane	membrane	yes
+SL-0273	Viral tegument	other	yes
+SL-0274	Virion	other	no
+SL-0275	Virion membrane	membrane	no
+SL-0273	Virion tegument	other	no
+SL-0540	Vitelline membrane	secreted	yes
+SL-0314	Z bodies	cytoplasm	yes
+SL-0314	Z body	cytoplasm	yes
+SL-0314	Z disc	cytoplasm	yes
+SL-0314	Z disk	cytoplasm	yes
+SL-0314	Z line	cytoplasm	no
+SL-0314	Z-band	cytoplasm	yes
+SL-0314	Z-disc	cytoplasm	yes
+SL-0314	Z-disk	cytoplasm	yes
+SL-0314	Z-line	cytoplasm	yes
+SL-0009	ZA	other	yes
+SL-0540	Zona pellucida	secreted	no
+SL-0009	Zonula adherens	other	yes
+SL-0265	Zonula occludens	other	yes
+SL-0539	Zoospore	other	yes
+SL-0545	Zymogen granule	other	no
+SL-0548	Zymogen granule lumen	other	no
+SL-0549	Zymogen granule membrane	membrane	no
+SL-0007	acrosome	other	yes
+SL-0004	acrosome inner membrane	membrane	yes
+SL-0005	acrosome lumen	other	yes
+SL-0006	acrosome membrane	membrane	yes
+SL-0447	acrosome outer membrane	membrane	yes
+SL-0008	actin patch	cytoplasm	yes
+SL-0009	adherens junction	other	yes
+SL-0010	aleurone grain	other	yes
+SL-0317	aleurone grain lumen	other	yes
+SL-0011	aleurone grain membrane	membrane	yes
+SL-0012	amyloplast	other	yes
+SL-0013	amyloplast inner membrane	membrane	yes
+SL-0014	amyloplast membrane	membrane	yes
+SL-0016	apical lamina	secreted	yes
+SL-0018	apicoplast	other	yes
+SL-0019	apoplast	secreted	yes
+SL-0020	attachment organelle	other	yes
+SL-0021	attachment organelle membrane	membrane	yes
+SL-0023	autophagosome	other	yes
+SL-0318	autophagosome lumen	other	yes
+SL-0022	autophagosome membrane	membrane	yes
+SL-0279	axon	other	yes
+SL-0489	bacterial extracellular vesicle	other	yes
+SL-0025	basement membrane	secreted	yes
+SL-0472	bleb	other	yes
+SL-0032	calyx	cytoplasm	yes
+SL-0033	capsule	secreted	yes
+SL-0035	caveola	membrane	yes
+SL-0197	cell body	other	yes
+SL-0138	cell cortex	cytoplasm	yes
+SL-0041	cell wall	secreted	yes
+SL-0485	centriolar satellite	cytoplasm	yes
+SL-0046	centriole	cytoplasm	yes
+SL-0047	centromere	other	yes
+SL-0048	centrosome	cytoplasm	yes
+SL-0049	chloroplast	other	yes
+SL-0050	chloroplast envelope	other	yes
+SL-0051	chloroplast inner membrane	membrane	yes
+SL-0052	chloroplast intermembrane space	other	yes
+SL-0053	chloroplast membrane	membrane	yes
+SL-0139	chloroplast nucleoid	other	yes
+SL-0054	chloroplast outer membrane	membrane	yes
+SL-0055	chloroplast stroma	other	yes
+SL-0056	chloroplast thylakoid	other	yes
+SL-0057	chloroplast thylakoid lumen	other	yes
+SL-0058	chloroplast thylakoid membrane	membrane	yes
+SL-0060	chlorosome envelope	other	yes
+SL-0061	chromaffin granule	other	yes
+SL-0349	chromaffin granule lumen	other	yes
+SL-0062	chromaffin granule membrane	membrane	yes
+SL-0063	chromoplast	other	yes
+SL-0064	chromoplast membrane	membrane	yes
+SL-0065	chromoplast stroma	other	yes
+SL-0066	cilium	other	yes
+SL-0304	cilium axoneme	cytoplasm	yes
+SL-0087	cilium basal body	cytoplasm	yes
+SL-0305	cilium membrane	membrane	yes
+SL-0067	cis-Golgi	other	yes
+SL-0067	cis-Golgi complex	other	yes
+SL-0068	cis-Golgi complex membrane	membrane	yes
+SL-0068	cis-Golgi membrane	membrane	yes
+SL-0067	cis-Golgi network	other	no
+SL-0068	cis-Golgi network membrane	membrane	no
+SL-0069	clathrin-coated pit	membrane	yes
+SL-0070	clathrin-coated vesicle	other	yes
+SL-0319	clathrin-coated vesicle lumen	other	yes
+SL-0071	clathrin-coated vesicle membrane	membrane	yes
+SL-0072	coated pit	membrane	yes
+SL-0080	cvt vesicle	other	yes
+SL-0323	cvt vesicle lumen	other	yes
+SL-0081	cvt vesicle membrane	membrane	yes
+SL-0082	cyanelle	other	yes
+SL-0479	cyanelle envelope	other	yes
+SL-0480	cyanelle inner membrane	membrane	yes
+SL-0481	cyanelle intermembrane space	other	yes
+SL-0083	cyanelle membrane	membrane	yes
+SL-0482	cyanelle outer membrane	membrane	yes
+SL-0350	cyanelle stroma	other	yes
+SL-0277	cyanelle thylakoid	other	yes
+SL-0084	cyanelle thylakoid lumen	other	yes
+SL-0085	cyanelle thylakoid membrane	membrane	yes
+SL-0090	cytoskeleton	cytoplasm	yes
+SL-0091	cytosol	cytoplasm	yes
+SL-0283	dendrite	other	yes
+SL-0284	dendritic spine	other	yes
+SL-0285	dendritic spine membrane	membrane	yes
+SL-0092	desmosome	other	yes
+SL-0109	esterosome	other	yes
+SL-0328	esterosome lumen	other	yes
+SL-0108	esterosome membrane	membrane	yes
+SL-0110	etioplast	other	yes
+SL-0329	etioplast membrane	membrane	yes
+SL-0330	etioplast stroma	other	yes
+SL-0466	extracellular exosome	secreted	yes
+SL-0111	extracellular matrix	secreted	yes
+SL-0112	extracellular space	secreted	yes
+SL-0286	filopodium	other	yes
+SL-0287	filopodium membrane	membrane	yes
+SL-0470	filopodium tip	other	yes
+SL-0117	flagellum	other	yes
+SL-0114	flagellum axoneme	cytoplasm	yes
+SL-0308	flagellum basal body	cytoplasm	yes
+SL-0115	flagellum membrane	membrane	yes
+SL-0118	focal adhesion	other	yes
+SL-0124	gap junction	other	yes
+SL-0127	gem	nucleus	yes
+SL-0288	growth cone	other	yes
+SL-0289	growth cone membrane	membrane	yes
+SL-0137	hemidesmosome	other	yes
+SL-0428	host caveola	membrane	yes
+SL-0396	host cis-Golgi network	other	yes
+SL-0397	host cis-Golgi network membrane	membrane	yes
+SL-0383	host cytoskeleton	other	yes
+SL-0384	host cytosol	other	yes
+SL-0379	host filopodium	other	yes
+SL-0453	host multivesicular body	other	yes
+SL-0412	host nucleolus	other	yes
+SL-0413	host nucleoplasm	other	yes
+SL-0507	host pathogen-containing vacuole	other	yes
+SL-0508	host pathogen-containing vacuole lumen	other	yes
+SL-0509	host pathogen-containing vacuole membrane	membrane	yes
+SL-0382	host perinuclear region	other	yes
+SL-0432	host phagosome	other	yes
+SL-0433	host phagosome membrane	membrane	yes
+SL-0385	host plasmodesma	other	yes
+SL-0434	host presynaptic cell membrane	membrane	yes
+SL-0504	host secretory vesicle	other	yes
+SL-0502	host synaptic vesicle	other	yes
+SL-0503	host synaptic vesicle membrane	other	yes
+SL-0463	host trans-Golgi network	other	yes
+SL-0464	host trans-Golgi network membrane	membrane	yes
+SL-0143	hyaline layer	secreted	yes
+SL-0146	interphotoreceptor matrix	secreted	yes
+SL-0148	invadopodium	other	yes
+SL-0290	invadopodium membrane	membrane	yes
+SL-0149	kinetochore	other	yes
+SL-0150	kinetoplast	mitochondrion	yes
+SL-0460	kinocilium	other	yes
+SL-0291	lamellipodium	other	yes
+SL-0292	lamellipodium membrane	membrane	yes
+SL-0230	mRNA processing bodies	cytoplasm	yes
+SL-0230	mRNA processing body	cytoplasm	yes
+SL-0230	mRNA-decay foci	cytoplasm	yes
+SL-0495	mRNP granule	cytoplasm	yes
+SL-0495	mRNP granules	cytoplasm	yes
+SL-0163	microneme	other	yes
+SL-0339	microneme lumen	other	yes
+SL-0164	microneme membrane	membrane	yes
+SL-0484	microtubule organizing center	cytoplasm	yes
+SL-0293	microvillus	other	yes
+SL-0294	microvillus membrane	membrane	yes
+SL-0269	mitochondrion nucleoid	mitochondrion	yes
+SL-0174	multivesicular body	other	yes
+SL-0340	multivesicular body lumen	other	yes
+SL-0175	multivesicular body membrane	membrane	yes
+SL-0312	myofibril	cytoplasm	yes
+SL-0518	neuron projection	other	yes
+SL-0526	neuronal dense core vesicle	other	yes
+SL-0532	neuronal dense core vesicle membrane	membrane	yes
+SL-0494	nuclear body	nucleus	yes
+SL-0185	nuclear pore complex	nucleus	yes
+SL-0187	nucleoid	cytoplasm	yes
+SL-0188	nucleolus	nucleus	yes
+SL-0497	nucleolus fibrillar center	nucleus	yes
+SL-0190	nucleoplasm	nucleus	yes
+SL-0351	organellar chromatophore	other	yes
+SL-0359	organellar chromatophore inner membrane	membrane	yes
+SL-0360	organellar chromatophore intermembrane space	other	yes
+SL-0352	organellar chromatophore membrane	membrane	yes
+SL-0361	organellar chromatophore outer membrane	membrane	yes
+SL-0353	organellar chromatophore stroma	other	yes
+SL-0354	organellar chromatophore thylakoid	other	yes
+SL-0355	organellar chromatophore thylakoid lumen	other	yes
+SL-0356	organellar chromatophore thylakoid membrane	membrane	yes
+SL-0192	paranodal septate junction	other	yes
+SL-0195	peribacteroid membrane	membrane	yes
+SL-0196	peribacteroid space	other	yes
+SL-0198	perinuclear region	cytoplasm	yes
+SL-0199	perinuclear theca	cytoplasm	yes
+SL-0367	perispore	other	yes
+SL-0473	phagocytic cup	other	yes
+SL-0206	phagosome	other	yes
+SL-0342	phagosome lumen	other	yes
+SL-0205	phagosome membrane	membrane	yes
+SL-0458	photoreceptor outer segment	other	yes
+SL-0207	phragmoplast	cytoplasm	yes
+SL-0208	plasmodesma	other	yes
+SL-0140	plastid nucleoid	other	yes
+SL-0217	plastoglobule	other	yes
+SL-0295	podosome	other	yes
+SL-0296	podosome membrane	membrane	yes
+SL-0371	pollen coat	secreted	yes
+SL-0218	porosome	membrane	yes
+SL-0522	postsynaptic endosome	other	yes
+SL-0225	primary cell wall	secreted	yes
+SL-0226	prolamellar body	other	yes
+SL-0298	pseudopodium	other	yes
+SL-0299	pseudopodium membrane	membrane	yes
+SL-0471	pseudopodium tip	other	yes
+SL-0551	rhabdomere	other	yes
+SL-0552	rhabdomere membrane	membrane	yes
+SL-0233	rhoptry	other	yes
+SL-0346	rhoptry lumen	other	yes
+SL-0234	rhoptry membrane	membrane	yes
+SL-0300	ruffle	other	yes
+SL-0301	ruffle membrane	membrane	yes
+SL-0238	sarcolemma	membrane	yes
+SL-0313	sarcomere	cytoplasm	yes
+SL-0311	sarcoplasm	cytoplasm	yes
+SL-0485	satellites	cytoplasm	yes
+SL-0242	secondary cell wall	secreted	yes
+SL-0244	secretory vesicle	other	yes
+SL-0347	secretory vesicle lumen	other	yes
+SL-0245	secretory vesicle membrane	membrane	yes
+SL-0246	septate junction	other	yes
+SL-0247	slime layer	secreted	yes
+SL-0197	soma	other	yes
+SL-0251	spindle	cytoplasm	yes
+SL-0448	spindle pole	cytoplasm	yes
+SL-0252	spindle pole body	cytoplasm	yes
+SL-0530	spine apparatus	other	yes
+SL-0302	stereocilium	other	yes
+SL-0303	stereocilium membrane	membrane	yes
+SL-0501	stress fiber	cytoplasm	yes
+SL-0255	surface film	secreted	yes
+SL-0259	synaptic vesicle	other	yes
+SL-0348	synaptic vesicle lumen	other	yes
+SL-0260	synaptic vesicle membrane	membrane	yes
+SL-0261	synaptosome	other	yes
+SL-0486	target cell cytoplasm	other	yes
+SL-0452	target membrane	membrane	yes
+SL-0276	telomere	other	yes
+SL-0265	tight junction	other	yes
+SL-0266	trans-Golgi	other	yes
+SL-0266	trans-Golgi complex	other	yes
+SL-0267	trans-Golgi complex membrane	membrane	yes
+SL-0267	trans-Golgi membrane	membrane	yes
+SL-0266	trans-Golgi network	other	no
+SL-0267	trans-Golgi network membrane	membrane	no
+SL-0141	uropodium	other	yes

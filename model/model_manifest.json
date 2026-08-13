@@ -1,0 +1,31 @@
+{
+  "model_name": "INDELVAR",
+  "version": "2.0.0",
+  "algorithm": "random forest",
+  "implementation": "R randomForest 4.7.1.2",
+  "hyperparameters": {
+    "ntree": 1000,
+    "mtry": 7,
+    "nodesize": 1,
+    "sample_fraction": 1.0,
+    "replace": true,
+    "maxnodes": null
+  },
+  "n_features": 37,
+  "training_set_size": 4927,
+  "calibration": {
+    "method": "local posterior, one-sided bootstrap-discounted thresholds",
+    "bootstrap_replicates": 10000,
+    "indel_types": [
+      "deletion",
+      "insertion"
+    ]
+  },
+  "checksums_sha256": {
+    "indelvar_rf.rds": "10402825643e7dcac06b1a26b30828fb045beea49c13b82352b43bbdc7cc73c8",
+    "features.tsv": "e827344491aa32cadc53fac1127265c2402df6d681d63d9044273d2e73f74f2e",
+    "imputation_medians.tsv": "471dbca607fd3df38240df4cb7195651e3260eeef87c1b85978dd8693da0cff8",
+    "evidence_cutoffs.tsv": "959469d271c321d4729a16d4c84b01073671b6936d205758ae238edcbbb3c6da",
+    "evidence_strength_targets.tsv": "958049ee8f62724e4882e12c03805ecf64f4376c57426c234133d48f73df0489"
+  }
+}

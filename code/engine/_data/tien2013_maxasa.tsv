@@ -1,0 +1,45 @@
+# Tien et al. 2013 residue-specific maximum solvent-accessible surface area, in square angstroms.
+# Source      : Tien MZ, Meyer AG, Sydykova DK, Spielman SJ, Wilke CO.
+#               Maximum allowed solvent accessibilities of residues in proteins.
+#               PLoS ONE 2013;8(11):e80635.  doi:10.1371/journal.pone.0080635
+# Table       : Table 1, "Proposed values for ASA normalization"
+#   First  : PMC HTML rendering (PMC3836772).
+#   Second : publisher PDF, journals.plos.org, SHA256
+#            b793369d4ffdb5a8fa9740cb897164f73b9d4d93696f2967188f02bdcf55ad1b, 434958 bytes,
+#   Result : all 40 values identical, empty diff. Status VERIFIED_TWO_SOURCES.
+#   Rose 1985) although only the first two are carried here; a column-alignment error
+#   would shift Miller into Empirical and fail the diff, which is what makes the two
+#   retained columns trustworthy.
+#   theoretical_allowed : the authors' own recommendation. "We recommend that our theoretical
+#                         normalization values for the ALLOWED region (column 1 of Table 1) be
+#                         used to normalize ASA."
+#                         supplementary named this column, but the constant actually present in
+#   so the alternative remains representable and auditable, not because it is in use.
+# NOTE ON ENGINE
+#   Tien computed ASA with DSSP. This project computes SASA with FreeSASA using ProtOr radii.
+#   The algorithm (Lee-Richards) and probe radius (1.4 A) agree; the atomic radii sets differ.
+# NOTE ON RANGE
+#   RSA values above 1 occur legitimately. Tien: "virtually all amino acids display, on occasion,
+#   ASA values in excess of the normalization ASA values provided by either scale." Do not clip.
+#   Tien also recommend excluding chain-terminating residues, which this contract does.
+three_letter	theoretical_allowed
+ALA	129.0
+ARG	274.0
+ASN	195.0
+ASP	193.0
+CYS	167.0
+GLU	223.0
+GLN	225.0
+GLY	104.0
+HIS	224.0
+ILE	197.0
+LEU	201.0
+LYS	236.0
+MET	224.0
+PHE	240.0
+PRO	159.0
+SER	155.0
+THR	172.0
+TRP	285.0
+TYR	263.0
+VAL	174.0

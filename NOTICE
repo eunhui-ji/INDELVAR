@@ -1,0 +1,10 @@
+# Third-party data
+
+| Resource | Use | Source | Terms |
+|---|---|---|---|
+| ClinVar | `dataset/training_set/`, `dataset/test_set/`, `dataset/vus_set/` | [NCBI ClinVar](https://ftp.ncbi.nlm.nih.gov/pub/clinvar/xml/VCV_xml_old_format/ClinVarVCVRelease_2026-06.xml.gz) | [US Government work, public domain](https://www.ncbi.nlm.nih.gov/home/about/policies/) |
+| IGSR | Allele counts and frequencies in the precomputed database | [International Genome Sample Resource](https://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/1000G_2504_high_coverage/working/20220422_3202_phased_SNV_INDEL_SV/) | [Open, with attribution to the 1000 Genomes Project](https://www.internationalgenome.org/IGSR_disclaimer) |
+| dbSNP | Presence flag in the precomputed database | [NCBI dbSNP](https://ftp.ncbi.nlm.nih.gov/snp/latest_release/VCF/GCF_000001405.40.gz) | [US Government work, public domain](https://www.ncbi.nlm.nih.gov/home/about/policies/) |
+| Abderrazzaq et al. | `dataset/calibration_reference/` | [Calibration of in-frame indel variant effect predictors for clinical variant classification](https://doi.org/10.64898/2026.04.15.718599) | CC BY 4.0, attribution required |
+| AlphaFold DB, MANE, UniProt | Derived index and map tables in `code/engine/_data/` | [AlphaFold DB](https://alphafold.ebi.ac.uk/), [MANE](https://www.ncbi.nlm.nih.gov/refseq/MANE/), [UniProt](https://www.uniprot.org/) | CC BY 4.0 (AlphaFold, UniProt); public domain (MANE) |
+| INDELVAR | `code/`, `model/`, and the scores and features in every dataset | This repository | MIT, see LICENSE |

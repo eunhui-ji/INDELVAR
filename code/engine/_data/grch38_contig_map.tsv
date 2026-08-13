@@ -1,0 +1,41 @@
+# One assembly, three naming conventions in the pinned reference set. This file
+# is the ONLY authority for translating between them; no component may add or
+# strip a "chr" prefix itself.
+# ensembl_name   : as used by the local GRCh38 FASTA and the GERP bigWig
+# ucsc_name      : as used by the UCSC phyloP bigWig and the MANE GFF
+# length_bp      : agreed by every source that carries the contig
+# is_prefix_rule : "no" marks a mapping that is NOT "chr" + name. MT -> chrM is
+#                  the only one, and it is why this file exists: a naive prefix
+#                  gives chrMT, which does not exist in phyloP. Measured with
+#                  pyBigWig 0.3.25, that query raises RuntimeError("Invalid
+#                  interval bounds!") - an error naming the coordinates when the
+#                  real fault is the contig name. Resolve through this map and
+#                  fail closed with CHROM_NOT_CANONICAL instead.
+# Contigs outside this set are OUT OF SCOPE and fail closed. Unplaced scaffolds,
+# alt contigs and decoys are never scored.
+ensembl_name	ucsc_name	length_bp	is_prefix_rule	in_fasta	in_gerp	in_phylop	in_mane_gff
+1	chr1	248956422	yes	yes	yes	yes	yes
+2	chr2	242193529	yes	yes	yes	yes	yes
+3	chr3	198295559	yes	yes	yes	yes	yes
+4	chr4	190214555	yes	yes	yes	yes	yes
+5	chr5	181538259	yes	yes	yes	yes	yes
+6	chr6	170805979	yes	yes	yes	yes	yes
+7	chr7	159345973	yes	yes	yes	yes	yes
+8	chr8	145138636	yes	yes	yes	yes	yes
+9	chr9	138394717	yes	yes	yes	yes	yes
+10	chr10	133797422	yes	yes	yes	yes	yes
+11	chr11	135086622	yes	yes	yes	yes	yes
+12	chr12	133275309	yes	yes	yes	yes	yes
+13	chr13	114364328	yes	yes	yes	yes	yes
+14	chr14	107043718	yes	yes	yes	yes	yes
+15	chr15	101991189	yes	yes	yes	yes	yes
+16	chr16	90338345	yes	yes	yes	yes	yes
+17	chr17	83257441	yes	yes	yes	yes	yes
+18	chr18	80373285	yes	yes	yes	yes	yes
+19	chr19	58617616	yes	yes	yes	yes	yes
+20	chr20	64444167	yes	yes	yes	yes	yes
+21	chr21	46709983	yes	yes	yes	yes	yes
+22	chr22	50818468	yes	yes	yes	yes	yes
+X	chrX	156040895	yes	yes	yes	yes	yes
+Y	chrY	57227415	yes	yes	yes	yes	yes
+MT	chrM	16569	no	yes	yes	yes	yes

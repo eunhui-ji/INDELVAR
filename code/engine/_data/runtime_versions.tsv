@@ -1,0 +1,8 @@
+package	version	consumed_by
+numpy	2.5.1	all structure features
+pybigwig	0.3.25	phylop100_mean; gerp_mean
+freesasa	2.2.1	af_rsa_mean; buried_hydrophobic_fraction
+pydssp	0.9.1	af_helix_frac; af_sheet_frac; ss_element_break; ss_element_frac_affected; hbond_density
+einops	0.8.2	pydssp internals
+randomForest	4.7-1.2	model scoring
+digest	0.6.39	model scoring

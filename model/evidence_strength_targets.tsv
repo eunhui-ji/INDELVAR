@@ -1,25 +1,17 @@
-subset	evidence	target
-del	PP3_Supporting	2.39
-del	BP4_Supporting	0.4184
-del	PP3_Moderate	5.69
-del	BP4_Moderate	0.1757
-del	PP3_Moderate3	13.59
-del	BP4_Moderate3	0.0736
-del	PP3_Strong	32.42
-del	BP4_Strong	0.0308
-ins	PP3_Supporting	3.25
-ins	BP4_Supporting	0.3077
-ins	PP3_Moderate	10.55
-ins	BP4_Moderate	0.0948
-ins	PP3_Moderate3	34.28
-ins	BP4_Moderate3	0.0292
-ins	PP3_Strong	111.34
-ins	BP4_Strong	0.009
-pooled	PP3_Supporting	2.08
-pooled	BP4_Supporting	0.4808
-pooled	PP3_Moderate	4.33
-pooled	BP4_Moderate	0.2309
-pooled	PP3_Moderate3	9
-pooled	BP4_Moderate3	0.1111
-pooled	PP3_Strong	18.7
-pooled	BP4_Strong	0.0535
+indel_type	computational_evidence	computational_evidence_points	published_target_lr	prior	target_posterior	bootstrap_B	discount_alpha	cutoff_source
+deletion	PP3_Supporting	+1	2.39	0.046	0.103333	10000	0.05	Pejaver et al. 2022
+deletion	PP3_Moderate	+2	5.69	0.046	0.215293	10000	0.05	Pejaver et al. 2022
+deletion	PP3_Moderate	+3	13.59	0.046	0.395874	10000	0.05	Pejaver et al. 2022
+deletion	PP3_Strong	+4	32.42	0.046	0.609867	10000	0.05	Pejaver et al. 2022
+deletion	BP4_Supporting	-1	2.39	0.046	0.980224	10000	0.05	Pejaver et al. 2022
+deletion	BP4_Moderate	-2	5.69	0.046	0.991597	10000	0.05	Pejaver et al. 2022
+deletion	BP4_Moderate	-3	13.59	0.046	0.996464	10000	0.05	Pejaver et al. 2022
+deletion	BP4_Strong	-4	32.42	0.046	0.998515	10000	0.05	Pejaver et al. 2022
+insertion	PP3_Supporting	+1	3.25	0.008	0.0255403	10000	0.05	Pejaver et al. 2022
+insertion	PP3_Moderate	+2	10.55	0.008	0.0784095	10000	0.05	Pejaver et al. 2022
+insertion	PP3_Moderate	+3	34.28	0.008	0.216578	10000	0.05	Pejaver et al. 2022
+insertion	PP3_Strong	+4	111.34	0.008	0.473103	10000	0.05	Pejaver et al. 2022
+insertion	BP4_Supporting	-1	3.25	0.008	0.997525	10000	0.05	Pejaver et al. 2022
+insertion	BP4_Moderate	-2	10.55	0.008	0.999236	10000	0.05	Pejaver et al. 2022
+insertion	BP4_Moderate	-3	34.28	0.008	0.999765	10000	0.05	Pejaver et al. 2022
+insertion	BP4_Strong	-4	111.34	0.008	0.999928	10000	0.05	Pejaver et al. 2022

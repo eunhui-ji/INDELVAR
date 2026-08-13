@@ -1,0 +1,57 @@
+[build-system]
+requires = ["setuptools>=70.1"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "indelvar"
+version = "2.0.0"
+description = "Structure-based pathogenicity prediction for in-frame indels (1-10 aa), mapped to ACMG/AMP computational evidence"
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+authors = [{ name = "Eunhui Ji" }]
+keywords = ["genomics", "variant-interpretation", "indel", "ACMG", "MANE"]
+classifiers = [
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+]
+
+# Lookup returns a score the model produced earlier, so it computes nothing and
+# needs nothing but the standard library. numpy is imported by one module on the
+# direct-scoring path and sits in the extra with the rest of that path.
+dependencies = []
+
+# Pinned, not floored. pydssp assigns secondary structure and freesasa computes
+# solvent accessibility, so either moving changes FEATURE VALUES the frozen
+# model was trained on, and a caret here would let an upgrade change a score.
+[project.optional-dependencies]
+direct = [
+    "numpy==2.5.1",
+    "pyBigWig==0.3.25",
+    "pydssp==0.9.1",
+    "freesasa==2.2.1",
+    "torch==2.13.0",
+    "einops==0.8.2",
+]
+
+[project.scripts]
+indelvar = "indelvar.cli:main"
+
+# `code/` is the package, mapped rather than moved. The directory a reader
+# browses and the directory Python imports are the same files: no `src/` copy
+# beside it, and nothing to keep in step.
+[tool.setuptools]
+packages = ["indelvar", "indelvar._engine"]
+
+[tool.setuptools.package-dir]
+indelvar = "code"
+"indelvar._engine" = "code/engine"
+
+# `_data` is one flat directory of thirteen files, so a flat glob is the whole
+# of it. A recursive glob would also quietly ship anything that appeared in a
+# subdirectory nobody declared.
+[tool.setuptools.package-data]
+indelvar = ["score_model.R"]
+"indelvar._engine" = ["_data/*"]

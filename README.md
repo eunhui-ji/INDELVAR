@@ -1,61 +1,71 @@
-# INDELVAR (IN-frame inDEL VARiant pathogenicity predictor)
+# INDELVAR
 
-INDELVAR predicts the pathogenicity of in-frame indels (1-10 amino acids) with a random forest over 39 features, including AlphaFold-derived three-dimensional structural features. It returns a 0-1 pathogenic probability, calibrated separately for insertions and deletions to ACMG/AMP evidence strata under the ClinGen SVI framework. Each prediction also decomposes into four interpretable fold-destabilization mechanisms (core packing loss, secondary-structure break, hydrogen-bond loss, and hydrophobic core exposure).
+![INDELVAR overview](figures/overview.png)
 
-![INDELVAR overview](assets/overview.png)
+## Overview
 
-## Model features (39)
+INDELVAR predicts the pathogenicity of in-frame insertions and deletions spanning 1–10 amino acids in MANE Select coding sequences. Given a GRCh38 variant, it returns 37 model features, an INDELVAR score, and its calibrated ACMG/AMP computational evidence strength.
 
-- **Structure** (14): mean pLDDT, helix/sheet fraction, relative solvent accessibility, weighted contact number, contact density, bridging contacts, secondary-structure-element break and fraction affected, H-bond density, hydrophobic-exposure risk, helix-register preservation, local SS class, low-pLDDT region ([AlphaFold DB](https://alphafold.ebi.ac.uk/))
-- **Conservation** (2): [phyloP100way](https://hgdownload.soe.ucsc.edu/goldenPath/hg38/phyloP100way/) (UCSC), [GERP](https://ftp.ensembl.org/pub/release-111/compara/conservation_scores/) (Ensembl)
-- **Sequence context** (5): indel size (absolute and CDS-relative), indel type, local sequence entropy, distance to the nearest splice site
-- **Gene constraint** (4): [pLI, LOEUF, missense-Z](https://gnomad.broadinstitute.org/data#v4-constraint) (gnomAD v4), CDS length
-- **Protein annotation** (14): domain / repeat / PTM / disulfide / active-site context, subcellular localization ([UniProt](https://www.uniprot.org/))
-
-## Usage: query by protein coordinate
-
-> **Setup:** install the dependencies into your own environment first with `pip install -r requirements.txt` (the bare system `python3` lacks `pyarrow`, which the tools need to read the score tables).
-
-INDELVAR is a MANE Select protein-coordinate resource. Get your variant's MANE consequence from [Ensembl VEP](https://github.com/Ensembl/ensembl-vep) (`--mane_select`) and look it up by gene (or MANE transcript) + HGVS p.:
+## Installation
 
 ```bash
-python code/indelvar_lookup.py --gene CFTR --hgvsp p.Leu127dup            # score + tier + mechanisms
-python code/indelvar_lookup.py --gene MLH1 --hgvsp p.Val612del --features # + the 39 features
+python -m pip install git+https://github.com/eunhui-ji/INDELVAR.git@v2.0.0
 ```
 
-Insertions are keyed by position and length only (the inserted-residue sequence is not modelled), so one record scores any in-frame insertion of a given size at a given junction. Everything runs offline (VEP `--offline` + local tables); no variant data leaves your machine.
-
-For per-variant SHAP, score a prepared 39-feature table (the `--features` columns) with the shipped [`model/`](model/) to get the score, evidence tier, and signed feature-group attribution:
+To score variants directly:
 
 ```bash
-Rscript code/score_variants.R <features.tsv> <out.tsv> [del|ins]
+git clone --branch v2.0.0 https://github.com/eunhui-ji/INDELVAR.git
+cd INDELVAR
+python -m pip install ".[direct]"
 ```
 
-## Performance
+Direct scoring requires R with `randomForest` and `digest`, Docker, and the reference datasets listed by `indelvar setup --check`.
 
-On an independent test set, INDELVAR reaches an AUROC of 0.925 (deletions 0.922, insertions 0.932). Its scores are calibrated separately per indel type to ACMG/AMP evidence strata under the ClinGen SVI local posterior-probability framework.
+## Usage
 
-## Download
+```bash
+indelvar setup --check
+indelvar cutoffs
+indelvar score --variant 10:100827584:C:CCTGCCGCTG --output -
+```
 
-The precomputed scores and the 39-feature matrix for all ~209 million 1-10 aa in-frame indels across 19,053 MANE Select protein-coding genes are on Zenodo (large files): **[DOI: 10.5281/zenodo.21285600](https://doi.org/10.5281/zenodo.21285600)**.
+Input variants can be provided as `CHROM POS REF ALT` coordinates or as VCF, TSV, or CSV files. A VCF must be GRCh38 with normalized REF/ALT; in-frame coding deletions and insertions of 1–10 amino acids are scored.
 
-| file | rows | description |
-|---|---|---|
-| `release_scores.parquet` / `.tsv.gz` | 209,211,495 | score, ACMG tier + points, four mechanism flags, per variant |
-| `release_features.parquet` | 209,211,495 | the 39 model features (joins to `release_scores`) |
+```bash
+indelvar score --input variants.vcf --output scored.tsv --mode lookup
+indelvar score --input variants.tsv --output scored.tsv --mode auto
+indelvar score --input variants.tsv --output scored.tsv --mode direct
+```
 
-Place the downloaded tables in `data/` (or pass `--tables <dir>` to the lookup tool). The trained model is in this repository under [`model/`](model/); no download is needed for SHAP.
+| Mode | Action |
+|---|---|
+| `lookup` | Retrieve a score from the downloaded database. |
+| `auto` | Use the database when available and calculate other supported variants. |
+| `direct` | Calculate scores without database lookup. |
 
-## Reproduce
+Each output row carries variant and transcript identifiers, the 37 model features, the INDELVAR score, its PP3/BP4 computational evidence, and provenance fields.
 
-[`code/WORKFLOW.md`](code/WORKFLOW.md) documents the full pipeline: building the cohorts and features, training the model, calibrating the cutoffs, and assembling the precomputed database.
+| Column | Description |
+|---|---|
+| `indelvar_score` | INDELVAR score from 0 to 1 |
+| `computational_evidence` | Calibrated PP3/BP4 evidence strength; not a clinical classification |
+| `computational_evidence_points` | Signed PP3/BP4 evidence points |
+| `n_features_imputed`, `imputed_features` | Number and names of imputed features |
 
-## Citation
+## Precomputed database
 
-If you use INDELVAR in your research, please cite:
+Precomputed scores for 372,518 variant-transcript rows from ClinVar, IGSR, and dbSNP are available from [Zenodo](https://doi.org/10.5281/zenodo.21285600).
 
-Ji E. "INDELVAR: Structure-based interpretation of in-frame indel pathogenicity." *bioRxiv* (2026). *(preprint; DOI pending submission)*
+| File | Description |
+|---|---|
+| `indelvar_precomputed.sqlite` | Database used by the INDELVAR CLI for fast lookup |
+| `indelvar_precomputed.tsv.gz` | The same records as a compressed table, for bulk analysis |
 
-Calibration uses the ClinGen SVI local likelihood-ratio framework ([Pejaver et al. 2022](https://doi.org/10.1016/j.ajhg.2022.10.013)) with per-type evidence targets from [Abderrazzaq et al. 2026](https://doi.org/10.64898/2026.04.15.718599).
+```bash
+export INDELVAR_DB=$PWD/indelvar_precomputed.sqlite
+```
 
-The precomputed scores and feature tables are archived at [doi:10.5281/zenodo.21285600](https://doi.org/10.5281/zenodo.21285600).
+## Datasets
+
+Training, independent test, VUS, and calibration reference datasets are available in [`dataset/`](dataset/). Model files and calibration cutoffs are available in [`model/`](model/).

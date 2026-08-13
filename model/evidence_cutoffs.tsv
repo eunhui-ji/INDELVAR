@@ -1,17 +1,17 @@
-subset	evidence	points	cutoff	reached
-del	PP3_Supporting	1	0.7	TRUE
-del	PP3_Moderate	2	0.892	TRUE
-del	PP3_Moderate3	3	0.953	TRUE
-del	PP3_Strong	4		FALSE
-del	BP4_Supporting	-1	0.344	TRUE
-del	BP4_Moderate	-2	0.202	TRUE
-del	BP4_Moderate3	-3	0.0846666666666667	TRUE
-del	BP4_Strong	-4	0.017	TRUE
-ins	PP3_Supporting	1	0.587	TRUE
-ins	PP3_Moderate	2	0.808	TRUE
-ins	PP3_Moderate3	3	0.944	TRUE
-ins	PP3_Strong	4	0.972	TRUE
-ins	BP4_Supporting	-1	0.182	TRUE
-ins	BP4_Moderate	-2	0.0373333333333333	TRUE
-ins	BP4_Moderate3	-3	0.003	TRUE
-ins	BP4_Strong	-4	0.00233333333333333	TRUE
+indel_type	computational_evidence	computational_evidence_points	point_threshold	discounted_threshold	operational_band_status
+deletion	PP3_Supporting	+1	0.622	0.643	DISTINCT_BAND
+deletion	PP3_Moderate	+2	0.762	0.844	DISTINCT_BAND
+deletion	PP3_Moderate	+3	0.933	0.944	DISTINCT_BAND
+deletion	PP3_Strong	+4	0.970	0.980	DISTINCT_BAND
+deletion	BP4_Supporting	-1	0.380	0.262	DISTINCT_BAND
+deletion	BP4_Moderate	-2	0.197	0.184	DISTINCT_BAND
+deletion	BP4_Moderate	-3	0.168	0.072	DISTINCT_BAND
+deletion	BP4_Strong	-4	0.072	0.021	DISTINCT_BAND
+insertion	PP3_Supporting	+1	0.515	0.546	DISTINCT_BAND
+insertion	PP3_Moderate	+2	0.701	0.797	DISTINCT_BAND
+insertion	PP3_Moderate	+3	0.929	0.942	DISTINCT_BAND
+insertion	PP3_Strong	+4	0.952	0.992	DISTINCT_BAND
+insertion	BP4_Supporting	-1	0.277	0.150	DISTINCT_BAND
+insertion	BP4_Moderate	-2	0.139	0.036	DISTINCT_BAND
+insertion	BP4_Moderate	-3	0.035	0.014	NO_DISTINCT_BAND_SAME_AS_STRONGER_TIER
+insertion	BP4_Strong	-4	0.014	0.014	DISTINCT_BAND
